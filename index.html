@@ -1,681 +1,413 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ALOQA Mikromoliya Tashkiloti</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-<style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --brand:#2C5EAD;--brand-d:#1C3F7A;--brand-l:#4A8FE7;--brand-bg:#EDF3FC;--brand-bg2:#F0F5FF;
-  --ink:#0B1B3D;--ink2:#334766;--ink3:#64748B;--ink4:#94A3B8;
-  --surface:#FFFFFF;--surface2:#F7F9FC;--surface3:#EEF2F7;
-  --line:#E2E8F0;--line2:#CBD5E1;
-  --r:16px;--r2:12px;--r3:24px;
-  --glass:rgba(255,255,255,.72);--glass2:rgba(255,255,255,.56);--glass-line:rgba(148,163,184,.26);
-  --sh1:0 1px 2px rgba(0,0,0,.04),0 4px 16px rgba(0,0,0,.04);
-  --sh2:0 8px 32px rgba(44,94,173,.12),0 1px 4px rgba(0,0,0,.06);
-  --sh3:0 20px 60px rgba(44,94,173,.15),0 2px 8px rgba(0,0,0,.06);
-  --glow:0 0 0 1px rgba(255,255,255,.5),0 24px 70px rgba(44,94,173,.18);
-}
-html{scroll-behavior:smooth}
-body{font-family:'Inter',system-ui,sans-serif;color:var(--ink);background:radial-gradient(circle at 12% 10%,rgba(74,143,231,.16),transparent 28%),radial-gradient(circle at 90% 22%,rgba(44,94,173,.14),transparent 30%),linear-gradient(180deg,#fbfdff 0%,#ffffff 45%,#eef5ff 100%);line-height:1.65;overflow-x:hidden;-webkit-font-smoothing:antialiased}
-body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:-2;background-image:linear-gradient(rgba(44,94,173,.055) 1px,transparent 1px),linear-gradient(90deg,rgba(44,94,173,.055) 1px,transparent 1px);background-size:54px 54px;mask-image:radial-gradient(circle at 50% 18%,#000 0%,transparent 72%);-webkit-mask-image:radial-gradient(circle at 50% 18%,#000 0%,transparent 72%)}
-body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:-1;opacity:.035;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 160 160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='.45'/%3E%3C/svg%3E")}
-::selection{background:var(--brand-bg);color:var(--brand)}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Fintech Services</title>
+    <style>
+        /* ==========================================================================
+           1. СБРОС СТИЛЕЙ И БАЗОВЫЕ НАСТРОЙКИ
+           ========================================================================== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
 
-/* === LOADER === */
-.loader{position:fixed;inset:0;background:#fff;display:flex;align-items:center;justify-content:center;z-index:9999;transition:opacity .6s,visibility .6s}
-.loader.hide{opacity:0;visibility:hidden;pointer-events:none}
-.loader-brand{font-size:1.6rem;font-weight:900;color:var(--brand);letter-spacing:-.03em;margin-bottom:2rem;display:flex;align-items:center;gap:.6rem}
-.loader-brand svg{width:36px;height:36px;animation:logoSpin 2s ease infinite}
-@keyframes logoSpin{0%,100%{transform:rotate(0deg) scale(1)}50%{transform:rotate(180deg) scale(.95)}}
-.loader-track{width:180px;height:3px;background:var(--surface3);border-radius:3px;overflow:hidden}
-.loader-fill{height:100%;background:linear-gradient(90deg,var(--brand),var(--brand-l));border-radius:3px;animation:loadFill 1.8s ease forwards}
-@keyframes loadFill{to{width:100%}}
+        /* ==========================================================================
+           2. ПРЕМИАЛЬНЫЙ МАСЛЯНЫЙ ФОН (MESH GRADIENT & NOISE)
+           ========================================================================== */
+        body {
+            color: #1e293b;
+            min-height: 100vh;
+            background-color: #f4f8fa;
+            
+            /* Жидкий многослойный Mesh-градиент в исходной палитре */
+            background-image: 
+                radial-gradient(at 10% 10%, rgba(162, 209, 252, 0.5) 0px, transparent 45%),
+                radial-gradient(at 90% 15%, rgba(244, 217, 163, 0.45) 0px, transparent 45%),
+                radial-gradient(at 50% 50%, rgba(255, 255, 255, 0.8) 0px, transparent 60%),
+                radial-gradient(at 30% 85%, rgba(179, 222, 255, 0.4) 0px, transparent 50%),
+                radial-gradient(at 85% 85%, rgba(247, 230, 198, 0.5) 0px, transparent 40%);
+            background-attachment: fixed;
+            background-size: cover;
+            position: relative;
+            padding-bottom: 60px;
+        }
 
-/* === NAV === */
-.nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:1rem 3rem;display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,0);backdrop-filter:blur(0px);transition:all .4s}
-.nav.solid{background:rgba(255,255,255,.92);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--line);box-shadow:0 1px 12px rgba(0,0,0,.04)}
-.nav-logo{display:flex;align-items:center;gap:.6rem;text-decoration:none}
-.nav-logo svg{width:32px;height:32px}
-.nav-logo-t{font-size:1.1rem;font-weight:900;color:var(--brand);letter-spacing:-.02em;line-height:1}
-.nav-logo-s{font-size:.55rem;font-weight:500;color:var(--ink3);letter-spacing:.06em;text-transform:uppercase;margin-top:2px}
-.nav-menu{display:flex;gap:2.5rem;list-style:none}
-.nav-menu a{font-size:.84rem;font-weight:500;color:var(--ink2);text-decoration:none;transition:color .2s;position:relative}
-.nav-menu a:hover{color:var(--brand)}
-.nav-right{display:flex;align-items:center;gap:1rem}
-.lang-sw{display:flex;background:var(--surface2);border:1px solid var(--line);border-radius:8px;padding:2px}
-.lang-b{padding:.25rem .65rem;font-size:.72rem;font-weight:700;cursor:pointer;color:var(--ink4);background:0;border:0;border-radius:6px;transition:all .2s}
-.lang-b.on{background:var(--brand);color:#fff}
-.nav-btn{padding:.5rem 1.3rem;background:var(--brand);color:#fff;border:0;border-radius:8px;font-weight:700;font-size:.8rem;cursor:pointer;transition:all .25s}
-.nav-btn:hover{background:var(--brand-d);transform:translateY(-1px);box-shadow:var(--sh2)}
-.burger{display:none;flex-direction:column;gap:4px;cursor:pointer;padding:5px}
-.burger i{display:block;width:18px;height:2px;background:var(--ink);border-radius:2px}
-.mob-menu{display:none;position:fixed;top:64px;left:0;right:0;background:rgba(255,255,255,.98);backdrop-filter:blur(16px);border-bottom:1px solid var(--line);padding:1.5rem 2rem;z-index:99;flex-direction:column;gap:.6rem}
-.mob-menu.open{display:flex}
-.mob-menu a{font-size:.92rem;font-weight:500;color:var(--ink2);text-decoration:none;padding:.7rem 0;border-bottom:1px solid var(--line)}
+        /* Ультра-тонкий слой процедурного шума для эффекта дорогого матового стекла */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            opacity: 0.035; /* Едва заметный благородный шум */
+            pointer-events: none;
+            z-index: 9999;
+        }
 
-/* === HERO === */
-.hero{min-height:100vh;display:flex;align-items:center;padding:8rem 3rem 6rem;position:relative;overflow:hidden}
-.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 18% 18%,rgba(74,143,231,.24),transparent 30%),radial-gradient(circle at 82% 18%,rgba(44,94,173,.18),transparent 28%),linear-gradient(155deg,#ffffff 0%,#f4f8ff 38%,#eaf3ff 66%,#ffffff 100%);z-index:0}
-.hero::after{content:'';position:absolute;inset:0;z-index:0;pointer-events:none;background-image:linear-gradient(rgba(44,94,173,.08) 1px,transparent 1px),linear-gradient(90deg,rgba(44,94,173,.08) 1px,transparent 1px),radial-gradient(circle at 50% 30%,rgba(255,255,255,.65),transparent 40%);background-size:64px 64px,64px 64px,100% 100%;mask-image:radial-gradient(circle at 50% 45%,#000 0%,transparent 75%);-webkit-mask-image:radial-gradient(circle at 50% 45%,#000 0%,transparent 75%);opacity:.55}
-.hero-mesh{position:absolute;top:-200px;right:-200px;width:800px;height:800px;border-radius:50%;background:radial-gradient(circle,rgba(44,94,173,.08) 0%,transparent 70%);z-index:0;animation:meshFloat 15s ease-in-out infinite alternate}
-.hero-mesh2{position:absolute;bottom:-150px;left:-150px;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(74,143,231,.06) 0%,transparent 70%);z-index:0;animation:meshFloat 12s ease-in-out infinite alternate-reverse}
-@keyframes meshFloat{0%{transform:translate(0,0) scale(1)}100%{transform:translate(30px,-20px) scale(1.05)}}
-.hero-inner{max-width:1200px;margin:0 auto;width:100%;display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center;position:relative;z-index:1}
-.hero-tag{display:inline-flex;align-items:center;gap:.5rem;padding:.4rem 1rem;background:var(--brand-bg);border-radius:99px;font-size:.72rem;font-weight:700;color:var(--brand);margin-bottom:1.8rem;opacity:0;animation:riseIn .7s .3s forwards}
-.hero-tag::before{content:'';width:6px;height:6px;background:var(--brand);border-radius:50%;animation:pulse 2s infinite}
-@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(1.4)}}
-.hero-h{font-size:clamp(2.6rem,5vw,4rem);font-weight:900;line-height:1.05;letter-spacing:-.04em;margin-bottom:1.4rem;opacity:0;animation:riseIn .7s .45s forwards}
-.hero-h em{font-style:normal;color:var(--brand);position:relative}
-.hero-p{font-size:1.05rem;color:var(--ink2);max-width:440px;line-height:1.75;margin-bottom:2.5rem;opacity:0;animation:riseIn .7s .6s forwards}
-.hero-actions{display:flex;gap:.75rem;flex-wrap:wrap;opacity:0;animation:riseIn .7s .75s forwards}
-.h-btn{padding:.85rem 2rem;border-radius:10px;font-weight:700;font-size:.92rem;cursor:pointer;transition:all .3s;display:inline-flex;align-items:center;gap:.5rem;border:none}
-.h-btn-p{background:var(--brand);color:#fff;box-shadow:0 4px 20px rgba(44,94,173,.35)}
-.h-btn-p:hover{background:var(--brand-d);transform:translateY(-3px);box-shadow:0 8px 30px rgba(44,94,173,.4)}
-.h-btn-s{background:0;color:var(--ink);border:1.5px solid var(--line2)}
-.h-btn-s:hover{border-color:var(--brand);color:var(--brand);transform:translateY(-3px)}
-.hero-nums{display:flex;gap:3rem;margin-top:3rem;opacity:0;animation:riseIn .7s .9s forwards}
-.hero-num .n{font-size:1.6rem;font-weight:900;color:var(--brand);letter-spacing:-.03em}
-.hero-num .l{font-size:.72rem;color:var(--ink4);font-weight:500;margin-top:.15rem}
-@keyframes riseIn{to{opacity:1;transform:translateY(0)}}
-[class*="riseIn"]{transform:translateY(24px)}
-.hero-tag,.hero-h,.hero-p,.hero-actions,.hero-nums{transform:translateY(24px)}
+        /* ==========================================================================
+           3. КОМПОНЕНТЫ ИНТЕРФЕЙСА (ГЕОМЕТРИЯ И СЕТКА)
+           ========================================================================== */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
 
-/* === CALC === */
-.hero-calc{opacity:0;transform:translateY(30px) scale(.98);animation:calcIn .8s .5s forwards}
-@keyframes calcIn{to{opacity:1;transform:translateY(0) scale(1)}}
-.calc{background:#fff;border:1px solid var(--line);border-radius:var(--r3);padding:2.2rem;box-shadow:var(--sh3);position:relative;overflow:hidden}
-.calc::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--brand),var(--brand-l))}
-.calc-head{margin-bottom:1.8rem}
-.calc-head h3{font-size:1.05rem;font-weight:800;letter-spacing:-.01em;margin-bottom:.15rem}
-.calc-head p{font-size:.78rem;color:var(--ink3)}
-.calc-field{margin-bottom:1.5rem}
-.calc-lbl{display:flex;justify-content:space-between;font-size:.78rem;font-weight:500;color:var(--ink2);margin-bottom:.6rem}
-.calc-lbl b{color:var(--brand);font-weight:800}
-input[type=range]{width:100%;-webkit-appearance:none;height:5px;border-radius:5px;background:var(--surface3);outline:0;cursor:pointer;transition:background .2s}
-input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;border-radius:50%;background:var(--brand);cursor:pointer;box-shadow:0 0 0 5px rgba(44,94,173,.15);transition:all .2s}
-input[type=range]::-webkit-slider-thumb:hover{box-shadow:0 0 0 8px rgba(44,94,173,.2);transform:scale(1.1)}
-.calc-rate{display:flex;justify-content:space-between;padding:.65rem 1rem;background:var(--surface2);border-radius:10px;margin-bottom:1.2rem;font-size:.82rem}
-.calc-rate span:first-child{color:var(--ink3)}.calc-rate span:last-child{font-weight:800;color:var(--brand)}
-.calc-results{display:grid;grid-template-columns:1fr 1fr;gap:.8rem;padding-top:1.2rem;border-top:1px solid var(--line)}
-.calc-res{text-align:center;padding:1rem;background:var(--brand-bg);border-radius:var(--r2)}
-.calc-res small{font-size:.68rem;color:var(--ink3);font-weight:500;display:block;margin-bottom:.3rem}
-.calc-res strong{font-size:1.15rem;font-weight:900;color:var(--brand)}
+        /* Шапка сайта */
+        header {
+            padding: 24px 0;
+            margin-bottom: 40px;
+        }
 
-/* === SECTIONS === */
-.sec{padding:7rem 3rem;position:relative}
-.sec-inner{max-width:1140px;margin:0 auto}
-.sec-tag{display:inline-block;padding:.3rem .9rem;background:var(--brand-bg);border-radius:6px;font-size:.68rem;font-weight:700;color:var(--brand);letter-spacing:.08em;text-transform:uppercase;margin-bottom:.8rem}
-.sec-title{font-size:clamp(1.8rem,3.5vw,2.5rem);font-weight:900;line-height:1.12;letter-spacing:-.03em;margin-bottom:.8rem}
-.sec-title em{font-style:normal;color:var(--brand)}
-.sec-desc{font-size:.95rem;color:var(--ink2);max-width:500px;line-height:1.75}
-/* reveal */
-.rv{opacity:0;transform:translateY(36px);transition:opacity .8s cubic-bezier(.22,1,.36,1),transform .8s cubic-bezier(.22,1,.36,1)}
-.rv.v{opacity:1;transform:translateY(0)}
-.rvl{opacity:0;transform:translateX(-36px);transition:opacity .8s cubic-bezier(.22,1,.36,1),transform .8s cubic-bezier(.22,1,.36,1)}
-.rvl.v{opacity:1;transform:translateX(0)}
-.rvr{opacity:0;transform:translateX(36px);transition:opacity .8s cubic-bezier(.22,1,.36,1),transform .8s cubic-bezier(.22,1,.36,1)}
-.rvr.v{opacity:1;transform:translateX(0)}
+        .header-wrap {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
 
-/* === CARDS (collateral, achievements, advantages) === */
-.card-grid{display:grid;gap:1.5rem;margin-top:3rem}
-.card-grid.c3{grid-template-columns:repeat(3,1fr)}
-.card-grid.c2{grid-template-columns:repeat(2,1fr)}
-.card-grid.auto{grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
-.card{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:2rem;transition:all .4s cubic-bezier(.22,1,.36,1);position:relative;overflow:hidden}
-.card:hover{transform:translateY(-8px);border-color:rgba(44,94,173,.3);box-shadow:var(--sh2)}
-.card-icon{width:52px;height:52px;border-radius:14px;background:var(--brand-bg);display:flex;align-items:center;justify-content:center;margin-bottom:1.2rem;transition:all .3s}
-.card:hover .card-icon{background:var(--brand);transform:scale(1.05)}
-.card-icon svg{width:24px;height:24px;transition:all .3s}
-.card:hover .card-icon svg{filter:brightness(0) invert(1)}
-.card h3{font-size:1rem;font-weight:700;margin-bottom:.4rem;letter-spacing:-.01em}
-.card p{font-size:.82rem;color:var(--ink3);line-height:1.6}
-.card .num{font-size:1.5rem;font-weight:900;color:var(--brand);margin-top:.8rem}
-.card .badge{display:inline-block;margin-top:1rem;padding:.3rem .8rem;background:var(--brand-bg);border-radius:6px;font-size:.7rem;font-weight:700;color:var(--brand)}
+        .logo {
+            font-size: 22px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            color: #0f172a;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
 
-/* Collateral special: larger */
-.coll-card{text-align:center;padding:2.5rem 2rem}
-.coll-card .card-icon{margin:0 auto 1.2rem;width:64px;height:64px;border-radius:18px}
+        .logo-dot {
+            width: 10px;
+            height: 10px;
+            background: linear-gradient(135deg, #e4c382, #caa153);
+            border-radius: 50%;
+        }
 
-/* === ABOUT === */
-.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center}
-.about-visual{aspect-ratio:1;background:var(--brand-bg);border:1px solid var(--line);border-radius:var(--r3);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
-.about-visual svg{width:70%;height:70%;opacity:.9}
-.stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:.8rem;margin-top:1.5rem}
-.stat-box{background:#fff;border:1px solid var(--line);border-radius:var(--r2);padding:1rem;text-align:center;transition:all .3s}
-.stat-box:hover{border-color:var(--brand);transform:translateY(-3px);box-shadow:var(--sh1)}
-.stat-box .n{font-size:1.5rem;font-weight:900;color:var(--brand)}
-.stat-box .l{font-size:.68rem;color:var(--ink4);font-weight:500}
-.val-list{display:flex;flex-direction:column;gap:.7rem;margin-top:1.5rem}
-.val-item{display:flex;gap:1rem;padding:1rem;background:#fff;border:1px solid var(--line);border-radius:var(--r2);transition:all .3s}
-.val-item:hover{border-color:var(--brand);transform:translateX(6px);box-shadow:var(--sh1)}
-.val-ico{width:40px;height:40px;min-width:40px;border-radius:10px;background:var(--brand-bg);display:flex;align-items:center;justify-content:center}
-.val-ico svg{width:20px;height:20px;color:var(--brand)}
-.val-t{font-weight:700;font-size:.88rem;margin-bottom:.15rem}
-.val-d{font-size:.78rem;color:var(--ink3)}
+        /* Сетка карточек */
+        .grid-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
 
-/* === MAP === */
-.map-grid{display:grid;grid-template-columns:1fr 1.3fr;gap:3.5rem;align-items:center}
-.branch-list{list-style:none;display:flex;flex-direction:column;gap:.6rem}
-.branch-item{display:flex;align-items:center;gap:.9rem;padding:.85rem 1.1rem;background:#fff;border:1px solid var(--line);border-radius:var(--r2);cursor:pointer;transition:all .35s}
-.branch-item:hover,.branch-item.on{border-color:var(--brand);background:var(--brand-bg);transform:translateX(6px)}
-.br-dot{width:9px;height:9px;min-width:9px;background:var(--brand);border-radius:50%;box-shadow:0 0 0 3px rgba(44,94,173,.2)}
-.br-n{font-weight:700;font-size:.88rem}.br-a{font-size:.72rem;color:var(--ink4)}
-.map-box{background:#fff;border:1px solid var(--line);border-radius:var(--r3);padding:1.5rem;position:relative;overflow:hidden}
-.map-tip{position:absolute;background:#fff;border:1px solid var(--line);border-radius:10px;padding:.6rem .9rem;font-size:.78rem;pointer-events:none;opacity:0;transition:opacity .2s;z-index:10;box-shadow:var(--sh1);color:var(--ink)}
-.map-tip.show{opacity:1}
-.uz-svg{width:100%;height:auto}
-.mr{transition:all .4s;cursor:pointer}
-.mr.dim{fill:#eef2f7!important;stroke:#d0dae6!important;opacity:.5}
-.mr.lit{fill:#d0e2f7!important;stroke:#2C5EAD!important;stroke-width:2!important}
-.mr.sel{fill:#b0d0f0!important;stroke:#2C5EAD!important;stroke-width:2.5!important;filter:drop-shadow(0 0 10px rgba(44,94,173,.3))}
+        /* Двухколоночный блок: Калькулятор + Форма */
+        .main-workspace {
+            display: grid;
+            grid-template-columns: 1.4fr 1fr;
+            gap: 30px;
+            align-items: start;
+        }
 
-/* === FAQ === */
-.faq-list{max-width:720px;margin:3rem auto 0;display:flex;flex-direction:column;gap:.6rem}
-.fq{background:#fff;border:1px solid var(--line);border-radius:var(--r2);overflow:hidden;transition:border-color .3s}
-.fq.open{border-color:var(--brand)}
-.fq-q{width:100%;background:0;border:0;color:var(--ink);padding:1.2rem 1.4rem;display:flex;justify-content:space-between;align-items:center;cursor:pointer;text-align:left;font-family:inherit;font-size:.9rem;font-weight:600;gap:1rem}
-.fq-i{width:26px;height:26px;min-width:26px;border-radius:50%;background:var(--brand-bg);display:flex;align-items:center;justify-content:center;font-size:.9rem;color:var(--brand);transition:transform .3s,background .3s}
-.fq.open .fq-i{transform:rotate(45deg);background:var(--brand);color:#fff}
-.fq-a{max-height:0;overflow:hidden;transition:max-height .4s ease,padding .3s;padding:0 1.4rem;font-size:.84rem;color:var(--ink2);line-height:1.75}
-.fq-a.open{max-height:300px;padding:0 1.4rem 1.2rem}
+        @media (max-width: 900px) {
+            .main-workspace {
+                grid-template-columns: 1fr;
+            }
+        }
 
-/* === CTA === */
-.cta{background:linear-gradient(170deg,var(--surface2) 0%,var(--brand-bg) 50%,var(--brand-bg2) 100%)}
-.cta-grid{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center}
-.cta-links{display:flex;flex-direction:column;gap:.7rem;margin-top:2rem}
-.cta-link{display:flex;align-items:center;gap:.9rem;padding:.9rem 1.2rem;background:#fff;border:1px solid var(--line);border-radius:var(--r2);text-decoration:none;transition:all .3s}
-.cta-link:hover{transform:translateX(6px);border-color:var(--brand);box-shadow:var(--sh1)}
-.cta-link .i{font-size:1.3rem}.cta-link .t{font-size:.65rem;color:var(--ink4);font-weight:500}.cta-link .v{font-size:.92rem;font-weight:700;color:var(--ink)}
-.cta-form{background:#fff;border:1px solid var(--line);border-radius:var(--r3);padding:2.2rem;box-shadow:var(--sh2)}
-.cta-form h3{font-size:1.05rem;font-weight:800;margin-bottom:1.3rem}
-.fg{margin-bottom:.9rem}
-.fg label{display:block;font-size:.72rem;font-weight:600;color:var(--ink3);margin-bottom:.4rem}
-.fg input,.fg select{width:100%;padding:.7rem .9rem;background:var(--surface2);border:1px solid var(--line);border-radius:8px;color:var(--ink);font-family:inherit;font-size:.85rem;outline:0;transition:border-color .2s}
-.fg input:focus,.fg select:focus{border-color:var(--brand);background:#fff}
-.fg input::placeholder{color:var(--ink4)}
-.fg-row{display:grid;grid-template-columns:1fr 1fr;gap:.8rem}
-.sub-btn{width:100%;padding:.85rem;background:var(--brand);color:#fff;border:0;border-radius:10px;font-weight:700;font-size:.92rem;cursor:pointer;transition:all .25s;margin-top:.4rem}
-.sub-btn:hover{background:var(--brand-d);transform:translateY(-2px);box-shadow:var(--sh2)}
+        /* ==========================================================================
+           4. ТЕХНОЛОГИЯ УЛЬТРА-ГЛЯНЦЕВОГО СТЕКЛА (GLASSMORPHISM)
+           ========================================================================== */
+        .premium-glass-card {
+            background: rgba(255, 255, 255, 0.42);
+            backdrop-filter: blur(30px) saturate(180%);
+            -webkit-backdrop-filter: blur(30px) saturate(180%);
+            
+            /* Четкие стеклянные грани с высокой прозрачностью */
+            border: 1px solid rgba(255, 255, 255, 0.7);
+            border-radius: 28px;
+            padding: 35px;
+            
+            /* Эффект маслянистой плотности за счет сложной игры внутренних теней (спекулярные блики) */
+            box-shadow: 
+                0 4px 30px rgba(15, 23, 42, 0.02),      /* Едва заметная тень в основании */
+                0 25px 50px rgba(140, 175, 205, 0.08),  /* Мягкое объемное рассеивание */
+                inset 0 1px 2px rgba(255, 255, 255, 0.85), /* Верхняя сильная грань света */
+                inset 0 12px 24px rgba(255, 255, 255, 0.35),/* Внутренний масляный перелив */
+                inset 0 -4px 14px rgba(255, 255, 255, 0.25);/* Нижний отраженный свет */
+            
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), 
+                        box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
 
-/* === FOOTER === */
-.ft{background:var(--ink);color:rgba(255,255,255,.6);padding:4rem 3rem 2rem}
-.ft-inner{max-width:1140px;margin:0 auto}
-.ft-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:2.5rem;margin-bottom:3rem}
-.ft-brand{font-size:1.2rem;font-weight:900;color:#fff;margin-bottom:.6rem}
-.ft-desc{font-size:.78rem;color:rgba(255,255,255,.4);line-height:1.7;max-width:220px;margin-bottom:1.2rem}
-.ft-social{display:flex;gap:.5rem}
-.ft-social a{width:34px;height:34px;background:rgba(255,255,255,.08);border-radius:8px;display:flex;align-items:center;justify-content:center;text-decoration:none;transition:all .2s}
-.ft-social a:hover{background:rgba(255,255,255,.15);transform:translateY(-2px)}
-.ft-social a svg{width:16px;height:16px;fill:rgba(255,255,255,.6)}
-.ft-col-t{font-weight:700;font-size:.7rem;color:rgba(255,255,255,.3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:1rem}
-.ft-links{list-style:none;display:flex;flex-direction:column;gap:.5rem}
-.ft-links a{color:rgba(255,255,255,.5);text-decoration:none;font-size:.8rem;transition:color .2s}
-.ft-links a:hover{color:#fff}
-.ft-ci{font-size:.78rem;color:rgba(255,255,255,.4);margin-bottom:.6rem}
-.ft-ci strong{color:rgba(255,255,255,.7)}
-.ft-btm{border-top:1px solid rgba(255,255,255,.08);padding-top:1.2rem;display:flex;justify-content:space-between;font-size:.72rem;color:rgba(255,255,255,.25);flex-wrap:wrap;gap:.5rem}
-.ft-btm a{color:rgba(255,255,255,.35);text-decoration:none}
+        .premium-glass-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 
+                0 35px 65px rgba(120, 160, 195, 0.15),
+                inset 0 1px 3px rgba(255, 255, 255, 0.95),
+                inset 0 16px 32px rgba(255, 255, 255, 0.45),
+                inset 0 -2px 18px rgba(255, 255, 255, 0.35);
+        }
 
-/* Toast */
-.toast{position:fixed;bottom:1.5rem;right:1.5rem;background:#fff;border:1px solid var(--line);border-radius:var(--r2);padding:1rem 1.4rem;color:var(--ink);font-size:.85rem;font-weight:600;z-index:10000;transform:translateY(16px);opacity:0;transition:all .35s;box-shadow:var(--sh2);max-width:340px}
-.toast.show{transform:translateY(0);opacity:1}
+        /* ==========================================================================
+           5. ТИПОГРАФИКА И ЭЛЕМЕНТЫ ФОРМ
+           ========================================================================== */
+        h1, h2, h3 {
+            color: #0f172a;
+            font-weight: 700;
+            letter-spacing: -0.3px;
+            margin-bottom: 15px;
+        }
 
-/* Admin */
-.adm-trig{display:none;position:fixed;bottom:1.2rem;left:1.2rem;width:40px;height:40px;background:var(--brand);color:#fff;border:0;border-radius:10px;cursor:pointer;font-size:.85rem;z-index:9998;align-items:center;justify-content:center;box-shadow:var(--sh2)}
-.adm-trig.vis{display:flex}
-.adm-login{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:9995;backdrop-filter:blur(4px);align-items:center;justify-content:center}
-.adm-login.open{display:flex}
-.adm-login-box{background:#fff;border-radius:var(--r3);padding:2.5rem;width:360px;max-width:90vw;box-shadow:var(--sh3);text-align:center}
-.adm-login-box h3{font-size:1.1rem;font-weight:900;margin-bottom:.3rem}
-.adm-login-box p{font-size:.78rem;color:var(--ink3);margin-bottom:1.2rem}
-.adm-login-box input{width:100%;padding:.75rem 1rem;border:1px solid var(--line);border-radius:10px;font-size:.9rem;outline:0;text-align:center;margin-bottom:.8rem;font-family:inherit}
-.adm-login-box input:focus{border-color:var(--brand)}
-.adm-login-box .lbtn{width:100%;padding:.75rem;background:var(--brand);color:#fff;border:0;border-radius:10px;font-weight:700;font-size:.88rem;cursor:pointer}
-.adm-err{color:#e53e3e;font-size:.75rem;margin-bottom:.5rem;display:none}
-.adm-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:9990;backdrop-filter:blur(3px)}
-.adm-overlay.open{display:flex}
-.adm-panel{position:fixed;top:0;right:0;bottom:0;width:540px;max-width:95vw;background:#fff;z-index:9991;overflow-y:auto;box-shadow:-8px 0 50px rgba(0,0,0,.15);transform:translateX(100%);transition:transform .4s cubic-bezier(.22,1,.36,1)}
-.adm-panel.open{transform:translateX(0)}
-.ap-hd{padding:1.2rem 1.5rem;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;background:#fff;z-index:1}
-.ap-hd h2{font-size:1rem;font-weight:900}.ap-x{width:32px;height:32px;background:var(--surface2);border:1px solid var(--line);border-radius:8px;cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;color:var(--ink3)}
-.ap-bd{padding:1.5rem}
-.ap-tabs{display:flex;gap:.3rem;margin-bottom:1.2rem;flex-wrap:wrap}
-.ap-t{padding:.4rem .8rem;border:1px solid var(--line);border-radius:8px;font-size:.72rem;font-weight:700;cursor:pointer;color:var(--ink4);background:var(--surface2);transition:all .2s}
-.ap-t.on{background:var(--brand);color:#fff;border-color:var(--brand)}
-.ap-tc{display:none}.ap-tc.on{display:block}
-.ap-st{font-size:.78rem;font-weight:800;color:var(--brand);text-transform:uppercase;letter-spacing:.06em;margin-bottom:.8rem;padding-bottom:.4rem;border-bottom:1px solid var(--line)}
-.ap-f{margin-bottom:.7rem}
-.ap-f label{display:block;font-size:.68rem;font-weight:700;color:var(--ink4);margin-bottom:.25rem;text-transform:uppercase;letter-spacing:.04em}
-.ap-f input,.ap-f textarea,.ap-f select{width:100%;padding:.55rem .75rem;border:1px solid var(--line);border-radius:8px;font-family:inherit;font-size:.82rem;color:var(--ink);outline:0;background:var(--surface2)}
-.ap-f input:focus,.ap-f textarea:focus{border-color:var(--brand);background:#fff}
-.ap-f textarea{resize:vertical;min-height:55px}
-.ap-save{padding:.55rem 1.3rem;background:var(--brand);color:#fff;border:0;border-radius:8px;font-weight:700;font-size:.8rem;cursor:pointer;margin-top:.5rem}
-.ap-save:hover{background:var(--brand-d)}
-.ap-sm{padding:.3rem .7rem;background:var(--brand-bg);color:var(--brand);border:1px solid var(--line);border-radius:6px;font-size:.7rem;font-weight:700;cursor:pointer}
-.ap-sm:hover{background:var(--brand);color:#fff}
-.ap-danger{background:#fef2f2;color:#dc2626;border-color:#fecaca}
-.ap-danger:hover{background:#dc2626;color:#fff}
-.ba-item{display:flex;gap:.4rem;padding:.5rem;background:var(--surface2);border-radius:8px;margin-bottom:.4rem;flex-wrap:wrap;align-items:center}
-.ba-item input{flex:1;min-width:80px}
-.ba-item select{width:110px}
-.ap-note{font-size:.72rem;color:var(--ink4);padding:.5rem .8rem;background:var(--surface2);border-radius:8px;margin-bottom:.8rem;line-height:1.6}
+        .card-icon {
+            width: 55px;
+            height: 55px;
+            border-radius: 18px;
+            background: rgba(255, 255, 255, 0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.5);
+        }
 
+        .card-icon svg {
+            width: 26px;
+            height: 26px;
+            fill: #caa153;
+        }
 
-/* === PREMIUM VISUAL LAYER === */
-.nav.solid,.calc,.card,.map-box,.cta-form,.val-item,.stat-box,.branch-item,.fq,.cta-link,.adm-panel,.adm-login-box{background:var(--glass);backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);border-color:var(--glass-line)}
-.calc,.cta-form,.map-box{box-shadow:var(--glow)}
-.calc::after,.card::after,.cta-form::after{content:'';position:absolute;inset:0;border-radius:inherit;pointer-events:none;background:linear-gradient(135deg,rgba(255,255,255,.55),transparent 38%,rgba(44,94,173,.08));opacity:.55}
-.card,.cta-form,.calc{position:relative;isolation:isolate}.card>* ,.cta-form>* ,.calc>*{position:relative;z-index:1}
-.card:hover{transform:translateY(-10px) scale(1.015);box-shadow:0 22px 55px rgba(44,94,173,.16)}
-.hero-h em,.sec-title em{background:linear-gradient(90deg,var(--brand),var(--brand-l));-webkit-background-clip:text;background-clip:text;color:transparent}
-.hero-tag,.sec-tag{box-shadow:0 8px 22px rgba(44,94,173,.10);border:1px solid rgba(44,94,173,.10)}
-.hero-calc{filter:drop-shadow(0 18px 45px rgba(44,94,173,.16))}
-.about-visual{background:radial-gradient(circle at 35% 28%,rgba(255,255,255,.92),transparent 34%),linear-gradient(145deg,rgba(237,243,252,.9),rgba(255,255,255,.55));box-shadow:inset 0 0 0 1px rgba(255,255,255,.65),0 18px 50px rgba(44,94,173,.12)}
-.sec:nth-of-type(even)::before{content:'';position:absolute;inset:0;pointer-events:none;background:radial-gradient(circle at 15% 20%,rgba(74,143,231,.08),transparent 30%),radial-gradient(circle at 85% 65%,rgba(44,94,173,.08),transparent 34%);opacity:.9}
-@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+        p {
+            color: #475569;
+            font-size: 15px;
+            line-height: 1.6;
+        }
 
-@media(max-width:1024px){.hero-inner,.about-grid,.cta-grid,.map-grid{grid-template-columns:1fr;gap:3rem}.card-grid.c3{grid-template-columns:1fr 1fr}.ft-grid{grid-template-columns:1fr 1fr}.hero-calc{order:-1}}
-@media(max-width:768px){.nav,.hero,.sec,.cta,.ft{padding-left:1.5rem;padding-right:1.5rem}.nav-menu{display:none}.burger{display:flex}.card-grid.c3,.card-grid.c2{grid-template-columns:1fr}.ft-grid{grid-template-columns:1fr}.fg-row{grid-template-columns:1fr}.hero-nums{flex-wrap:wrap;gap:1.5rem}.stat-row{grid-template-columns:1fr 1fr}.calc-results{grid-template-columns:1fr}.hero-actions{flex-direction:column}}
-</style>
+        /* Инпуты и ползунки (Стеклянный стиль) */
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            color: #334155;
+            margin-bottom: 10px;
+        }
+
+        .input-control {
+            width: 100%;
+            padding: 16px;
+            background: rgba(255, 255, 255, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.7);
+            border-radius: 14px;
+            font-size: 16px;
+            color: #0f172a;
+            font-weight: 500;
+            outline: none;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.02);
+            transition: all 0.3s;
+        }
+
+        .input-control:focus {
+            background: rgba(255, 255, 255, 0.8);
+            border-color: #caa153;
+            box-shadow: 0 0 0 4px rgba(202, 161, 83, 0.15);
+        }
+
+        /* Кастомизация интерактивного ползунка (Range) */
+        .range-slider {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 6px;
+            border-radius: 3px;
+            background: rgba(202, 161, 83, 0.2);
+            outline: none;
+            margin: 15px 0;
+        }
+
+        .range-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #e4c382, #caa153);
+            cursor: pointer;
+            border: 2px solid #ffffff;
+            box-shadow: 0 3px 8px rgba(202, 161, 83, 0.4);
+            transition: transform 0.1s;
+        }
+
+        .range-slider::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+        }
+
+        /* Вывод результатов в калькуляторе */
+        .calc-result {
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.5);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .result-val {
+            font-size: 24px;
+            font-weight: 700;
+            color: #caa153;
+            text-shadow: 0 1px 1px rgba(255, 255, 255, 0.8);
+        }
+
+        /* ==========================================================================
+           6. БЛАГОРОДНЫЕ ЗОЛОТЫЕ АКЦЕНТЫ (КНОПКИ С ОТЛИВОМ METALLIC)
+           ========================================================================== */
+        .premium-gold-button {
+            width: 100%;
+            background: linear-gradient(135deg, #e4c382 0%, #caa153 50%, #b98e3d 100%);
+            color: #ffffff;
+            font-size: 16px;
+            font-weight: 600;
+            border: none;
+            border-radius: 16px;
+            padding: 18px 32px;
+            letter-spacing: 0.3px;
+            cursor: pointer;
+            text-shadow: 0 1px 2px rgba(15, 23, 42, 0.15);
+            
+            /* Создание трехмерного объема кнопки */
+            box-shadow: 
+                0 10px 25px rgba(202, 161, 83, 0.25),
+                inset 0 1px 1px rgba(255, 255, 255, 0.4), /* Верхний блик металла */
+                inset 0 -3px 8px rgba(0, 0, 0, 0.12);
+                
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .premium-gold-button:hover {
+            background: linear-gradient(135deg, #ebd096 0%, #d4ac62 50%, #c49947 100%);
+            box-shadow: 
+                0 14px 32px rgba(202, 161, 83, 0.35),
+                inset 0 1px 1px rgba(255, 255, 255, 0.5);
+            transform: translateY(-2px);
+        }
+
+        .premium-gold-button:active {
+            transform: translateY(1px);
+            box-shadow: 0 6px 16px rgba(202, 161, 83, 0.2);
+        }
+    </style>
 </head>
 <body>
-<!-- Loader -->
-<div class="loader" id="loader"><div style="text-align:center">
-<div class="loader-brand"><svg viewBox="0 0 100 100" fill="none"><path d="M50 5L82.7 20.8L95 55L82.7 79.2L50 95L17.3 79.2L5 55L17.3 20.8Z" fill="#2C5EAD"/><circle cx="50" cy="50" r="18" fill="white"/></svg> ALOQA</div>
-<div class="loader-track"><div class="loader-fill" style="width:0"></div></div>
-</div></div>
-<div class="toast" id="toast"></div>
-<button class="adm-trig" id="admTrig" onclick="showLogin()">⚙</button>
-<div class="adm-login" id="admLogin"><div class="adm-login-box"><h3>🔐 Вход</h3><p>Введите пароль администратора</p><div class="adm-err" id="admErr">Неверный пароль</div><input type="password" id="admPass" placeholder="Пароль" onkeydown="if(event.key==='Enter')checkPass()"><button class="lbtn" onclick="checkPass()">Войти</button><p style="font-size:.62rem;color:var(--ink4);margin-top:.8rem">По умолчанию: <b>aloqa2025</b></p></div></div>
-<div class="adm-overlay" id="admOverlay" onclick="closeAdm()"></div>
-<div class="adm-panel" id="admPanel">
-<div class="ap-hd"><h2>⚙ Панель управления</h2><button class="ap-x" onclick="closeAdm()">✕</button></div>
-<div class="ap-bd">
-<div class="ap-tabs">
-<button class="ap-t on" onclick="aTab('con')">Контакты</button>
-<button class="ap-t" onclick="aTab('calc')">Калькулятор</button>
-<button class="ap-t" onclick="aTab('br')">Филиалы</button>
-<button class="ap-t" onclick="aTab('abt')">О компании</button>
-<button class="ap-t" onclick="aTab('bot')">Telegram</button>
-<button class="ap-t" onclick="aTab('sec')">Пароль</button>
-</div>
-<!-- Contacts -->
-<div class="ap-tc on" id="tc-con"><div class="ap-st">Контакты</div>
-<div class="ap-f"><label>Телефон</label><input id="a-phone"></div>
-<div class="ap-f"><label>Telegram</label><input id="a-tg"></div>
-<div class="ap-f"><label>Email</label><input id="a-email"></div>
-<div class="ap-f"><label>Адрес (RU)</label><input id="a-addr-ru"></div>
-<div class="ap-f"><label>Адрес (UZ)</label><input id="a-addr-uz"></div>
-<button class="ap-save" onclick="saveCon()">💾 Сохранить</button></div>
-<!-- Calculator -->
-<div class="ap-tc" id="tc-calc"><div class="ap-st">Процентная ставка</div>
-<div class="ap-f"><label>Годовая ставка (%)</label><input id="a-rate" type="number" step="0.1" min="0"></div>
-<div class="ap-note">Месячная ставка: <b id="a-yearly">3%</b> &nbsp;·&nbsp; Калькулятор считает аннуитет по месячной ставке</div>
-<div class="ap-st" style="margin-top:1rem">Лимиты суммы</div>
-<div class="ap-f"><label>Минимум (сум)</label><input id="a-min" type="number"></div>
-<div class="ap-f"><label>Максимум (сум)</label><input id="a-max" type="number"></div>
-<div class="ap-f"><label>Шаг</label><input id="a-step" type="number"></div>
-<div class="ap-st" style="margin-top:1rem">Лимиты срока</div>
-<div class="ap-f"><label>Мин. срок (мес)</label><input id="a-tmin" type="number"></div>
-<div class="ap-f"><label>Макс. срок (мес)</label><input id="a-tmax" type="number"></div>
-<button class="ap-save" onclick="saveCalc()">💾 Сохранить</button></div>
-<!-- Branches -->
-<div class="ap-tc" id="tc-br"><div class="ap-st">Филиалы</div><div id="brAdm"></div>
-<button class="ap-sm" onclick="addBr()" style="margin-top:.5rem">+ Добавить</button>
-<button class="ap-save" onclick="saveBr()" style="margin-top:.8rem">💾 Сохранить</button></div>
-<!-- About -->
-<div class="ap-tc" id="tc-abt"><div class="ap-st">Статистика</div>
-<div class="ap-f"><label>Клиентов</label><input id="a-clients"></div>
-<div class="ap-f"><label>Кредитов</label><input id="a-loans"></div>
-<div class="ap-f"><label>Филиалов</label><input id="a-bcount"></div>
-<div class="ap-st" style="margin-top:1rem">Миссия / Ценности / Цель</div>
-<div class="ap-f"><label>Миссия</label><textarea id="a-mission"></textarea></div>
-<div class="ap-f"><label>Ценности</label><textarea id="a-values"></textarea></div>
-<div class="ap-f"><label>Цель</label><textarea id="a-goal"></textarea></div>
-<button class="ap-save" onclick="saveAbt()">💾 Сохранить</button></div>
-<!-- Bot -->
-<div class="ap-tc" id="tc-bot"><div class="ap-st">Интеграция заявок</div>
-<div class="ap-note"><b>Безопасный вариант:</b> в этот сайт вставляется только Webhook URL. Bot Token и Chat ID должны храниться на стороне Google Apps Script/сервере, а не в HTML.</div>
-<div class="ap-f"><label>Webhook URL</label><input id="a-webhook" placeholder="https://script.google.com/macros/s/.../exec"></div>
-<button class="ap-save" onclick="saveBot()">💾 Сохранить</button>
-<button class="ap-sm" onclick="testBot()" style="margin-top:.5rem">🧪 Тест webhook</button>
-<div class="ap-note" style="margin-top:.8rem">Если webhook не указан, форма покажет пользователю сообщение, но заявка никуда не уйдёт. Для реальных лидов подключите backend.</div></div>
-<!-- Security -->
-<div class="ap-tc" id="tc-sec"><div class="ap-st">Сменить пароль</div>
-<div class="ap-f"><label>Текущий</label><input id="a-oldp" type="password"></div>
-<div class="ap-f"><label>Новый</label><input id="a-newp" type="password"></div>
-<div class="ap-f"><label>Повтор</label><input id="a-newp2" type="password"></div>
-<button class="ap-save" onclick="chPass()">🔐 Сменить</button>
-<div class="ap-note" style="margin-top:1rem">Вход в админку: <b>vashsayt.uz?admin</b></div></div>
-</div></div>
 
-<!-- NAV -->
-<nav class="nav" id="nav">
-<a href="#" class="nav-logo"><svg viewBox="0 0 100 100" fill="none"><path d="M50 5L82.7 20.8L95 55L82.7 79.2L50 95L17.3 79.2L5 55L17.3 20.8Z" fill="#2C5EAD"/><circle cx="50" cy="50" r="18" fill="white"/></svg><div><div class="nav-logo-t">ALOQA</div><div class="nav-logo-s">Mikromoliya Tashkiloti</div></div></a>
-<ul class="nav-menu" id="navMenu"></ul>
-<div class="nav-right"><div class="lang-sw"><button class="lang-b on" id="bRu" onclick="setL('ru')">RU</button><button class="lang-b" id="bUz" onclick="setL('uz')">UZ</button></div><button class="nav-btn" id="navCta" onclick="go('#cta')"></button><div class="burger" onclick="togMob()"><i></i><i></i><i></i></div></div>
-</nav>
-<div class="mob-menu" id="mobMenu"></div>
+    <header>
+        <div class="container header-wrap">
+            <div class="logo">
+                <div class="logo-dot"></div>
+                <span>FINANCE PREMIUM</span>
+            </div>
+        </div>
+    </header>
 
-<!-- HERO -->
-<section class="hero" id="hero"><div class="hero-mesh"></div><div class="hero-mesh2"></div>
-<div class="hero-inner">
-<div><div class="hero-tag" id="hTag"></div><h1 class="hero-h" id="hTitle"></h1><p class="hero-p" id="hSub"></p>
-<div class="hero-actions"><button class="h-btn h-btn-p" id="hBtn1" onclick="go('#cta')"></button><button class="h-btn h-btn-s" id="hBtn2" onclick="go('#cta')"></button></div>
-<div class="hero-nums" id="hNums"></div>
-</div>
-<div class="hero-calc"><div class="calc">
-<div class="calc-head"><h3 id="calcT"></h3><p id="calcS"></p></div>
-<div class="calc-field"><div class="calc-lbl"><span id="calcAL"></span><b id="amtD"></b></div><input type="range" id="amtR" oninput="calcUp()"></div>
-<div class="calc-field"><div class="calc-lbl"><span id="calcTL"></span><b id="trmD"></b></div><input type="range" id="trmR" oninput="calcUp()"></div>
-<div class="calc-rate"><span id="calcRL"></span><span id="calcRV"></span></div>
-<div class="calc-results"><div class="calc-res"><small id="calcML"></small><strong id="mPay">—</strong></div><div class="calc-res"><small id="calcTTL"></small><strong id="tPay">—</strong></div></div>
-<button class="h-btn h-btn-p" style="width:100%;justify-content:center;margin-top:1.2rem" id="calcBtn" onclick="go('#cta')"></button>
-</div></div>
-</div></section>
+    <main class="container">
+        
+        <section class="grid-cards">
+            
+            <div class="premium-glass-card">
+                <div class="card-icon">
+                    <svg viewBox="0 0 24 24"><path d="M18.92 11c.08-.25.08-.5.08-.75 0-1.66-1.34-3-3-3h-8c-1.66 0-3 1.34-3 3 0 .25 0 .5.08.75A2.997 2.997 0 0 0 3 13v5c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-5c0-1.06-.55-1.98-1.38-2.5M6.5 15c-.83 0-1.5-.67-1.5-1.5S5.67 12 6.5 12s1.5.67 1.5 1.5S7.33 15 6.5 15m11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5M5 10c0-.55.45-1 1-1h12c.55 0 1 .45 1 1v1H5z"/></svg>
+                </div>
+                <h3>Автокредит</h3>
+                <p>Получите финансирование под залог вашего транспортного средства в течение 15 минут без скрытых комиссий.</p>
+            </div>
 
-<!-- COLLATERAL -->
-<section class="sec" id="collateral" style="background:var(--surface)"><div class="sec-inner">
-<div class="rv" style="text-align:center"><div class="sec-tag" id="collTag"></div><h2 class="sec-title" id="collTitle"></h2><p class="sec-desc" style="margin:0 auto" id="collDesc"></p></div>
-<div class="card-grid c3" id="collGrid"></div>
-</div></section>
+            <div class="premium-glass-card">
+                <div class="card-icon">
+                    <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+                </div>
+                <h3>Недвижимость</h3>
+                <p>Крупные инвестиционные решения под обеспечение жилой или коммерческой недвижимости на выгодных условиях.</p>
+            </div>
 
-<!-- ABOUT -->
-<section class="sec" id="about" style="background:var(--surface2)"><div class="sec-inner"><div class="about-grid">
-<div class="rvl">
-<div class="about-visual"><svg viewBox="0 0 320 320" fill="none"><circle cx="160" cy="160" r="120" stroke="#2C5EAD" stroke-width="1" stroke-dasharray="8 4" opacity=".2"/><circle cx="160" cy="160" r="80" stroke="#2C5EAD" stroke-width="1" stroke-dasharray="5 3" opacity=".12"/><circle cx="160" cy="160" r="40" fill="#e8f0fa" stroke="#2C5EAD" opacity=".5"/><text x="160" y="168" text-anchor="middle" font-size="28">💎</text><circle cx="160" cy="50" r="14" fill="#e8f0fa" stroke="#2C5EAD"/><text x="160" y="55" text-anchor="middle" font-size="13">🏦</text><circle cx="270" cy="160" r="14" fill="#e8f0fa" stroke="#2C5EAD"/><text x="270" y="165" text-anchor="middle" font-size="13">📈</text><circle cx="50" cy="160" r="14" fill="#e8f0fa" stroke="#2C5EAD"/><text x="50" y="165" text-anchor="middle" font-size="13">🔒</text><circle cx="160" cy="270" r="14" fill="#e8f0fa" stroke="#2C5EAD"/><text x="160" y="275" text-anchor="middle" font-size="13">⭐</text></svg></div>
-<div class="stat-row" id="statRow"></div>
-</div>
-<div class="rvr"><div class="sec-tag" id="abtTag"></div><h2 class="sec-title" id="abtTitle"></h2><p class="sec-desc" id="abtDesc" style="margin-bottom:1.3rem"></p><div class="val-list" id="valList"></div></div>
-</div></div></section>
+            <div class="premium-glass-card">
+                <div class="card-icon">
+                    <svg viewBox="0 0 24 24"><path d="M12 2L2 12h3v8h14v-8h3L12 2zm0 15.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                </div>
+                <h3>Драгоценные металлы</h3>
+                <p>Моментальная оценка и выдача средств под обеспечение золота, платины и сертифицированных ювелирных изделий.</p>
+            </div>
 
-<!-- ACHIEVEMENTS -->
-<section class="sec" id="achievements" style="background:var(--surface)"><div class="sec-inner">
-<div class="rv" style="text-align:center"><div class="sec-tag" id="achTag"></div><h2 class="sec-title" id="achTitle"></h2></div>
-<div class="card-grid auto" id="achGrid"></div>
-</div></section>
+        </section>
 
-<!-- MAP -->
-<section class="sec" id="map" style="background:var(--surface2)"><div class="sec-inner"><div class="map-grid">
-<div class="rvl"><div class="sec-tag" id="mapTag"></div><h2 class="sec-title" id="mapTitle"></h2><p class="sec-desc" id="mapDesc" style="margin-bottom:1.5rem"></p><ul class="branch-list" id="brList"></ul></div>
-<div class="rvr"><div class="map-box"><div class="map-tip" id="mapTip"></div>
-<svg class="uz-svg" viewBox="0 0 800 520"><path id="r-karakalpakstan" class="mr" data-r="karakalpakstan" d="M20,60 L60,25 L120,15 L180,25 L210,50 L230,90 L245,140 L248,190 L240,240 L225,280 L200,310 L170,330 L135,340 L100,335 L70,318 L45,290 L28,255 L18,215 L12,170 L15,120Z" fill="#dce8f5" stroke="#2C5EAD" stroke-width="1.2"/><path id="r-xorazm" class="mr" data-r="xorazm" d="M180,25 L220,30 L250,55 L245,90 L230,90 L210,50Z" fill="#e8f0fa" stroke="#a8c4e0"/><path id="r-buxoro" class="mr" data-r="buxoro" d="M248,190 L290,170 L340,175 L380,200 L390,240 L375,290 L340,330 L295,345 L255,335 L225,310 L225,280 L240,240Z" fill="#e8f0fa" stroke="#a8c4e0"/><path id="r-navoiy" class="mr" data-r="navoiy" d="M245,90 L290,80 L350,85 L400,100 L430,130 L440,170 L420,200 L380,200 L340,175 L290,170 L248,190 L245,140Z" fill="#e8f0fa" stroke="#a8c4e0"/><path id="r-qashqadaryo" class="mr" data-r="qashqadaryo" d="M390,240 L440,235 L490,255 L510,290 L500,330 L460,355 L410,350 L375,330 L340,330 L375,290Z" fill="#e8f0fa" stroke="#a8c4e0"/><path id="r-surxondaryo" class="mr" data-r="surxondaryo" d="M510,290 L545,285 L570,310 L575,350 L555,385 L525,400 L490,390 L460,355 L500,330Z" fill="#e8f0fa" stroke="#a8c4e0"/><path id="r-samarqand" class="mr" data-r="samarqand" d="M420,200 L470,195 L510,215 L520,250 L510,290 L490,255 L440,235 L390,240 L380,200Z" fill="#dce8f5" stroke="#2C5EAD" stroke-width="1.2"/><path id="r-jizzax" class="mr" data-r="jizzax" d="M440,170 L490,160 L530,175 L540,210 L520,250 L510,215 L470,195 L420,200Z" fill="#dce8f5" stroke="#2C5EAD" stroke-width="1.2"/><path id="r-sirdaryo" class="mr" data-r="sirdaryo" d="M530,175 L570,155 L605,160 L620,185 L605,210 L570,215 L540,210Z" fill="#e8f0fa" stroke="#a8c4e0"/><path id="r-toshkent" class="mr" data-r="toshkent" d="M570,90 L620,75 L670,85 L700,110 L710,145 L690,170 L650,180 L620,185 L605,160 L570,155 L550,130 L555,105Z" fill="#d0e2f7" stroke="#2C5EAD" stroke-width="1.5"/><path id="r-namangan" class="mr" data-r="namangan" d="M690,70 L740,60 L780,80 L785,120 L760,145 L730,150 L700,140 L690,110Z" fill="#dce8f5" stroke="#2C5EAD" stroke-width="1.2"/><path id="r-andijon" class="mr" data-r="andijon" d="M730,150 L770,145 L795,165 L790,200 L760,215 L730,200 L720,175Z" fill="#e8f0fa" stroke="#a8c4e0"/><path id="r-fargona" class="mr" data-r="fargona" d="M650,180 L690,170 L720,175 L730,200 L720,230 L680,240 L645,225 L630,200 L605,210 L620,185Z" fill="#e8f0fa" stroke="#a8c4e0"/></svg>
-</div></div>
-</div></div></section>
+        <section class="main-workspace">
+            
+            <div class="premium-glass-card">
+                <h2>Интерактивный калькулятор</h2>
+                <p style="margin-bottom: 25px;">Спланируйте свои финансы в реальном времени. Выберите сумму и срок.</p>
+                
+                <div class="form-group">
+                    <label id="amount-label">Сумма займа: 50 000 000 сум</label>
+                    <input type="range" min="5000000" max="200000000" step="5000000" value="50000000" class="range-slider" id="amount-range">
+                </div>
 
-<!-- ADVANTAGES -->
-<section class="sec" id="advantages" style="background:var(--surface)"><div class="sec-inner">
-<div class="rv" style="text-align:center"><div class="sec-tag" id="advTag"></div><h2 class="sec-title" id="advTitle"></h2></div>
-<div class="card-grid c3" id="advGrid"></div>
-</div></section>
+                <div class="form-group">
+                    <label id="period-label">Срок финансирования: 12 месяцев</label>
+                    <input type="range" min="3" max="36" step="3" value="12" class="range-slider" id="period-range">
+                </div>
 
-<!-- FAQ -->
-<section class="sec" id="faq" style="background:var(--surface2)"><div class="sec-inner">
-<div class="rv" style="text-align:center"><div class="sec-tag" id="faqTag"></div><h2 class="sec-title" id="faqTitle"></h2></div>
-<div class="faq-list" id="faqList"></div>
-</div></section>
+                <div class="calc-result">
+                    <span>Ежемесячный платеж:</span>
+                    <span class="result-val" id="monthly-payment">4 850 000 сум</span>
+                </div>
+            </div>
 
-<!-- CTA -->
-<section class="sec cta" id="cta"><div class="sec-inner"><div class="cta-grid">
-<div class="rvl"><div class="sec-tag" id="ctaTag"></div><h2 class="sec-title" id="ctaTitle"></h2><p class="sec-desc" id="ctaDesc" style="margin-bottom:1rem"></p><div class="cta-links" id="ctaLinks"></div></div>
-<div class="cta-form rvr"><h3 id="formT"></h3>
-<div class="fg"><label id="fmNL"></label><input id="fN" placeholder=""></div>
-<div class="fg-row"><div class="fg"><label id="fmPL"></label><input id="fP" type="tel" placeholder="+998"></div><div class="fg"><label id="fmAL"></label><input id="fA" placeholder=""></div></div>
-<div class="fg"><label id="fmCL"></label><select id="fC"><option value=""></option><option value="auto"></option><option value="realty"></option><option value="gold"></option></select></div>
-<button class="sub-btn" id="fmBtn" onclick="submit()"></button>
-<p style="font-size:.65rem;color:var(--ink4);margin-top:.6rem;text-align:center" id="fmPriv"></p>
-</div>
-</div></div></section>
+            <div class="premium-glass-card">
+                <h2>Оставить заявку</h2>
+                <p style="margin-bottom: 25px;">Заполните краткую форму для связи с персональным менеджером.</p>
+                
+                <form onsubmit="event.preventDefault(); alert('Заявка успешно отправлена!');">
+                    <div class="form-group">
+                        <label>Ваше имя</label>
+                        <input type="text" class="input-control" placeholder="Иван Иванов" required>
+                    </div>
 
-<!-- FOOTER -->
-<footer class="ft"><div class="ft-inner">
-<div class="ft-grid" id="ftGrid"></div>
-<div class="ft-btm" id="ftBtm"></div>
-</div></footer>
+                    <div class="form-group">
+                        <label>Номер телефона</label>
+                        <input type="tel" class="input-control" placeholder="+998 (90) 123-45-67" required>
+                    </div>
 
-<script>
-// ========== DATA LAYER — all content lives here, NOT in HTML ==========
-const LS=k=>{try{const v=localStorage.getItem('aq_'+k);return v?JSON.parse(v):null}catch(e){return null}};
-const SS=(k,v)=>{try{localStorage.setItem('aq_'+k,JSON.stringify(v))}catch(e){}};
-const D={
-con:LS('con')||{phone:'+998 71 200 44 04',tg:'@aloqa_uz',email:'info@aloqa.uz',addr_ru:'Ташкент, ул. Навои 12',addr_uz:"Toshkent, Navoiy 12"},
-calc:(()=>{const v=LS('calc');const base={annualRate:36,min:5000000,max:300000000,step:5000000,tmin:3,tmax:60};if(!v)return base;if(v.annualRate===undefined&&v.rate!==undefined)v.annualRate=(+v.rate||0)*12;return {...base,...v}})(),
-br:LS('br')||[
-{n_ru:'Ташкент',n_uz:'Toshkent',a_ru:'ул. Навои 12',a_uz:'Navoiy 12',r:'toshkent'},
-{n_ru:'Наманган',n_uz:'Namangan',a_ru:'ул. Навоий 45',a_uz:'Navoiy 45',r:'namangan'},
-{n_ru:'Джизак',n_uz:'Jizzax',a_ru:'пр. Мустакиллик 7',a_uz:'Mustaqillik 7',r:'jizzax'},
-{n_ru:'Самарканд',n_uz:'Samarqand',a_ru:'ул. Ш. Рашидов 23',a_uz:'Sh. Rashidov 23',r:'samarqand'},
-{n_ru:'Нукус',n_uz:'Nukus',a_ru:'ул. А. Дощанов 5',a_uz:'A. Doshjanov 5',r:'karakalpakstan'}],
-abt:LS('abt')||{clients:'5 000+',loans:'50 млрд',bcount:'5',mission:'Обеспечивать доступность финансовых услуг для каждого гражданина Узбекистана.',vals:'Честность, прозрачность и ответственность в каждой сделке.',goal:'Ведущая микрофинансовая организация Центральной Азии к 2027 году.'},
-lead:(()=>{const v=LS('lead');if(v)return v;const old=LS('bot');return old&&old.webhook?old:{webhook:''}})(),
-pass:LS('pass')||'aloqa2025'
-};
-const REGS=['karakalpakstan','xorazm','buxoro','navoiy','qashqadaryo','surxondaryo','samarqand','jizzax','sirdaryo','toshkent','namangan','andijon','fargona'];
-const RN={karakalpakstan:'Қорақалпоғистон',xorazm:'Хоразм',buxoro:'Бухоро',navoiy:'Навоий',qashqadaryo:'Қашқадарё',surxondaryo:'Сурхондарё',samarqand:'Самарқанд',jizzax:'Жиззах',sirdaryo:'Сирдарё',toshkent:'Тошкент',namangan:'Наманган',andijon:'Андижон',fargona:'Фарғона'};
-let lang='ru',selReg=null,admIn=false;
+                    <button type="submit" class="premium-gold-button">Оформить решение</button>
+                </form>
+            </div>
 
-// ========== TRANSLATIONS ==========
-const T={
-ru:{nav:['Залог','О компании','Достижения','Филиалы','FAQ'],cta_b:'Оставить заявку',tag:'✦ Надёжное кредитование',h:'Ваш надёжный<br>финансовый <em>партнёр</em>',sub:'Быстрые кредиты под залог с минимальным пакетом документов. Решение за 2 часа. Прозрачные условия.',btn1:'Оставить заявку →',btn2:'Связаться',s1:'Клиентов',s2:'Выдано кредитов',s3:'Филиалов',ct:'Кредитный калькулятор',cs:'Рассчитайте платёж',ca:'Сумма кредита',cm:'Срок кредита',cr:'Процентная ставка',cml:'Ежемесячно',ctl:'Итого',cb:'Оформить →',
-co_tag:'Виды залога',co_t:'Принимаем в залог <em>различные активы</em>',co_d:'Гибкий подход к оценке. Выгодные условия для каждого типа залога.',
-co:[{i:'🚗',t:'Автомобиль',d:'Легковые, грузовые и коммерческие. Оценка в день обращения.',b:'Быстрая оценка'},{i:'🏠',t:'Недвижимость',d:'Квартиры, дома, помещения. Крупные суммы, длительные сроки.',b:'Крупные суммы'},{i:'🪙',t:'Золотые изделия',d:'Золотые украшения и изделия. Профессиональная оценка в день обращения.',b:'Выгодные условия'}],
-ab_tag:'О нас',ab_t:'Надёжный партнёр в <em>финансовых вопросах</em>',ab_d:'С 2018 года мы помогаем клиентам решать финансовые задачи. Прозрачные условия и индивидуальный подход — наш стандарт.',
-vt:['Наша миссия','Наши ценности','Наша цель'],vi:['🎯','🤝','🚀'],
-ac_tag:'Результаты',ac_t:'Достижения, <em>которыми гордимся</em>',
-ac:[{i:'🏆',t:'Лучшая МФО 2023',d:'Признаны лучшей по итогам независимого рейтинга.',n:'№1'},{i:'⚡',t:'Скорость',d:'Среднее время одобрения — 2 часа.',n:'2 ч'},{i:'💰',t:'50 млрд сум',d:'Выдано кредитов за всё время работы.',n:'50+'},{i:'😊',t:'98% довольны',d:'Клиенты рекомендуют нас друзьям.',n:'98%'},{i:'🔒',t:'Лицензия ЦБ',d:'Под надзором Центрального банка.',n:'ЦБ'},{i:'📍',t:'5 регионов',d:'Присутствуем по всему Узбекистану.',n:'5'}],
-mp_tag:'Филиалы',mp_t:'Мы присутствуем <em>по всему Узбекистану</em>',mp_d:'Филиалы в ключевых регионах страны.',
-ad_tag:'Почему мы',ad_t:'Наши <em>преимущества</em>',
-ad:[{i:'⚡',t:'Быстрое решение',d:'Рассмотрение заявки за 2 часа.'},{i:'💸',t:'Выгодные условия',d:'Конкурентные ставки без скрытых комиссий.'},{i:'📅',t:'Гибкие сроки',d:'От 3 до 60 месяцев.'},{i:'🛡️',t:'Надёжность',d:'Под надзором ЦБ РУз.'},{i:'🔐',t:'Безопасность',d:'Данные и залог под защитой.'},{i:'👥',t:'Поддержка',d:'Персональный менеджер.'}],
-fq_tag:'FAQ',fq_t:'Часто задаваемые <em>вопросы</em>',
-fq:[{q:'Какие документы нужны?',a:'Паспорт и документы на залоговое имущество. Без справок о доходах. Весь процесс — не более 2 часов.'},{q:'Какова максимальная сумма кредита?',a:'Сумма кредита — от 5 000 000 сум до 300 000 000 сум, в зависимости от стоимости залога.'},{q:'Автомобиль остаётся у меня?',a:'Да, вы продолжаете пользоваться автомобилем. Обременение регистрируется в реестре.'},{q:'Можно ли погасить досрочно?',a:'Да, досрочное погашение возможно в любое время без штрафов и комиссий.'},{q:'Как оценивается залог?',a:'Оценку проводят наши специалисты в день обращения. Оценка бесплатная.'},{q:'Как подать заявку?',a:'Заполните форму на сайте или напишите в Telegram. Ответ в течение 15 минут.'}],
-ct_tag:'Начните сейчас',ct_t:'Получите кредит <em>за 2 часа</em>',ct_d:'Оставьте заявку — менеджер свяжется в течение 15 минут.',ct_call:'Позвоните нам',ct_tg:'Telegram',
-fm_t:'Оставить заявку',fm_n:'Ваше имя *',fm_p:'Телефон *',fm_a:'Сумма кредита',fm_c:'Вид залога',fm_sel:'— Выберите —',fm_auto:'Автомобиль',fm_real:'Недвижимость',fm_gold:'Золотые изделия',fm_btn:'Отправить заявку →',fm_priv:'Нажимая кнопку, вы соглашаетесь с политикой конфиденциальности',
-ft_d:'Надёжная микрофинансовая организация Узбекистана. Лицензия ЦБ РУз.',ft_nav:'Навигация',ft_svc:'Услуги',ft_con:'Контакты',ft_s:['Кредит под залог авто','Кредит под залог недвижимости','Кредит под залог золотых изделий'],ft_cp:'© 2025 ALOQA Mikromoliya. Все права защищены.',
-ok:'✅ Заявка принята! Свяжемся за 15 минут.',err:'Заполните имя и телефон.',mo:' мес'},
-uz:{nav:['Garov','Kompaniya','Yutuqlar','Filiallar','FAQ'],cta_b:'Ariza qoldirish',tag:'✦ Ishonchli kreditlash',h:"Sizning ishonchli<br>moliyaviy <em>hamkoringiz</em>",sub:'Minimal hujjatlar bilan tezkor garovli kreditlar. 2 soat ichida qaror.',btn1:'Ariza qoldirish →',btn2:"Bog'lanish",s1:'Mijozlar',s2:'Berilgan kreditlar',s3:'Filiallar',ct:'Kredit kalkulyatori',cs:"Oylik to'lovni hisoblang",ca:'Kredit summasi',cm:'Kredit muddati',cr:'Foiz stavkasi',cml:"Oylik to'lov",ctl:'Umumiy summa',cb:'Rasmiylashtirish →',
-co_tag:'Garov turlari',co_t:"Turli <em>aktivlarni garovga</em> qabul qilamiz",co_d:'Moslashuvchan baholash. Qulay shartlar.',
-co:[{i:'🚗',t:'Avtomobil',d:'Yengil, yuk, tijorat avtomobillari.',b:'Tezkor baholash'},{i:'🏠',t:"Ko'chmas mulk",d:'Kvartira, uy, xonalar.',b:'Katta summalar'},{i:'🪙',t:'Oltin buyumlar',d:'Oltin zargarlik buyumlari. Murojaat kuni baholanadi.',b:'Qulay shartlar'}],
-ab_tag:'Biz haqimizda',ab_t:"Moliyaviy <em>ishonchli hamkor</em>",ab_d:"2018 yildan beri mijozlarga moliyaviy muammolarni hal qilishda yordam beramiz.",
-vt:['Missiyamiz','Qadriyatlarimiz','Maqsadimiz'],vi:['🎯','🤝','🚀'],
-ac_tag:'Natijalar',ac_t:"Maqtanishga <em>arzigulik yutuqlar</em>",
-ac:[{i:'🏆',t:'Eng yaxshi MFT 2023',d:"Mustaqil reyting bo'yicha.",n:'№1'},{i:'⚡',t:'Tezlik',d:"O'rtacha 2 soat.",n:'2 s'},{i:'💰',t:"50 mlrd so'm",d:'Barcha vaqt davomida.',n:'50+'},{i:'😊',t:'98% mamnun',d:'Tavsiya qiladi.',n:'98%'},{i:'🔒',t:'MB litsenziyasi',d:'Markaziy bank nazoratida.',n:'MB'},{i:'📍',t:'5 hudud',d:"Butun O'zbekiston.",n:'5'}],
-mp_tag:'Filiallar',mp_t:"Butun <em>O'zbekiston bo'ylab</em>",mp_d:'Asosiy hududlarda filiallar.',
-ad_tag:'Nima uchun biz',ad_t:"Bizning <em>afzalliklarimiz</em>",
-ad:[{i:'⚡',t:'Tezkor qaror',d:'2 soatda ko\'rib chiqish.'},{i:'💸',t:'Qulay shartlar',d:'Yashirin komissiyalarsiz.'},{i:'📅',t:'Moslashuvchan',d:'3 oydan 60 oygacha.'},{i:'🛡️',t:'Ishonchli',d:"O'z MB nazoratida."},{i:'🔐',t:'Xavfsiz',d:'Ma\'lumotlar himoyada.'},{i:'👥',t:'Yordam',d:'Shaxsiy menejer.'}],
-fq_tag:'FAQ',fq_t:"Ko'p so'raladigan <em>savollar</em>",
-fq:[{q:'Qanday hujjatlar kerak?',a:'Pasport va garov hujjatlari. 2 soat.'},{q:'Maksimal summa?',a:"5 000 000 so'mdan 300 000 000 so'mgacha."},{q:"Avtomobil menda qoladimi?",a:"Ha, foydalanishda davom etasiz."},{q:"Muddatidan avval to'lash?",a:'Ha, jarimasiz.'},{q:'Garov qanday baholanadi?',a:'Murojaat kuni. Bepul.'},{q:'Onlayn ariza?',a:'Sayt yoki Telegram. 15 daqiqada javob.'}],
-ct_tag:'Hozir boshlang',ct_t:"Kreditni <em>2 soatda oling</em>",ct_d:"Ariza qoldiring — 15 daqiqada bog'lanamiz.",ct_call:"Qo'ng'iroq qiling",ct_tg:'Telegram',
-fm_t:'Ariza qoldirish',fm_n:'Ismingiz *',fm_p:'Telefon *',fm_a:'Kredit summasi',fm_c:'Garov turi',fm_sel:'— Tanlang —',fm_auto:'Avtomobil',fm_real:"Ko'chmas mulk",fm_gold:'Oltin buyumlar',fm_btn:'Ariza yuborish →',fm_priv:"Tugmani bosish orqali maxfiylik siyosatiga rozilik bildirasiz",
-ft_d:"O'zbekistonning ishonchli MFT. O'z MB litsenziyasi.",ft_nav:'Navigatsiya',ft_svc:'Xizmatlar',ft_con:'Aloqa',ft_s:['Avto garovi','Ko\'chmas mulk garovi','Oltin buyumlar garovi'],ft_cp:'© 2025 ALOQA Mikromoliya. Barcha huquqlar himoyalangan.',
-ok:'✅ Ariza qabul qilindi!',err:'Ism va telefonni kiriting.',mo:' oy'}
-};
-const HR=['#collateral','#about','#achievements','#map','#faq'];
+        </section>
 
-// ========== RENDER ENGINE ==========
-function render(){const t=T[lang],c=D.con,s=D.calc,a=D.abt;
-// Nav
-let nm='';t.nav.forEach((n,i)=>nm+=`<li><a href="${HR[i]}">${n}</a></li>`);
-document.getElementById('navMenu').innerHTML=nm;
-document.getElementById('navCta').textContent=t.cta_b;
-let mm='';t.nav.forEach((n,i)=>mm+=`<a href="${HR[i]}" onclick="closeMob()">${n}</a>`);
-mm+=`<a href="#cta" onclick="closeMob()">${t.cta_b}</a>`;
-document.getElementById('mobMenu').innerHTML=mm;
-// Hero
-document.getElementById('hTag').innerHTML=t.tag;
-document.getElementById('hTitle').innerHTML=t.h;
-document.getElementById('hSub').textContent=t.sub;
-document.getElementById('hBtn1').textContent=t.btn1;
-document.getElementById('hBtn2').textContent=t.btn2;
-document.getElementById('hNums').innerHTML=`<div class="hero-num"><div class="n">${a.clients}</div><div class="l">${t.s1}</div></div><div class="hero-num"><div class="n">${a.loans}</div><div class="l">${t.s2}</div></div><div class="hero-num"><div class="n">${a.bcount}</div><div class="l">${t.s3}</div></div>`;
-// Calculator
-document.getElementById('calcT').textContent=t.ct;
-document.getElementById('calcS').textContent=t.cs;
-document.getElementById('calcAL').textContent=t.ca;
-document.getElementById('calcTL').textContent=t.cm;
-document.getElementById('calcRL').textContent=t.cr;
-document.getElementById('calcRV').textContent=(+s.annualRate||0)+'% год / '+(((+s.annualRate||0)/12).toFixed(2).replace(/\.00$/,''))+'% '+t.mo;
-document.getElementById('calcML').textContent=t.cml;
-document.getElementById('calcTTL').textContent=t.ctl;
-document.getElementById('calcBtn').textContent=t.cb;
-const ar=document.getElementById('amtR'),tr=document.getElementById('trmR');
-ar.min=s.min;ar.max=s.max;ar.step=s.step;if(!ar.value||+ar.value<s.min)ar.value=s.min;
-tr.min=s.tmin;tr.max=s.tmax;if(!tr.value||+tr.value<s.tmin)tr.value=12;
-calcUp();
-// Collateral
-document.getElementById('collTag').textContent=t.co_tag;
-document.getElementById('collTitle').innerHTML=t.co_t;
-document.getElementById('collDesc').textContent=t.co_d;
-document.getElementById('collGrid').innerHTML=t.co.map(c=>`<div class="card coll-card rv"><div class="card-icon" style="margin:0 auto 1.2rem;width:64px;height:64px;border-radius:18px;font-size:2rem">${c.i}</div><h3>${c.t}</h3><p>${c.d}</p><div class="badge">${c.b}</div></div>`).join('');
-// About
-document.getElementById('abtTag').textContent=t.ab_tag;
-document.getElementById('abtTitle').innerHTML=t.ab_t;
-document.getElementById('abtDesc').textContent=t.ab_d;
-document.getElementById('statRow').innerHTML=`<div class="stat-box"><div class="n">${a.clients}</div><div class="l">${t.s1}</div></div><div class="stat-box"><div class="n">${a.loans}</div><div class="l">${t.s2}</div></div><div class="stat-box"><div class="n">${a.bcount}</div><div class="l">${t.s3}</div></div>`;
-const vk=['mission','vals','goal'];
-document.getElementById('valList').innerHTML=t.vt.map((v,i)=>`<div class="val-item"><div class="val-ico" style="font-size:1.1rem">${t.vi[i]}</div><div><div class="val-t">${v}</div><div class="val-d">${a[vk[i]]}</div></div></div>`).join('');
-// Achievements
-document.getElementById('achTag').textContent=t.ac_tag;
-document.getElementById('achTitle').innerHTML=t.ac_t;
-document.getElementById('achGrid').innerHTML=t.ac.map(a=>`<div class="card rv"><div class="card-icon" style="font-size:1.2rem">${a.i}</div><h3>${a.t}</h3><p>${a.d}</p><div class="num">${a.n}</div></div>`).join('');
-// Map
-document.getElementById('mapTag').textContent=t.mp_tag;
-document.getElementById('mapTitle').innerHTML=t.mp_t;
-document.getElementById('mapDesc').textContent=t.mp_d;
-renderBr();
-// Advantages
-document.getElementById('advTag').textContent=t.ad_tag;
-document.getElementById('advTitle').innerHTML=t.ad_t;
-document.getElementById('advGrid').innerHTML=t.ad.map(a=>`<div class="card rv"><div class="card-icon" style="font-size:1.2rem">${a.i}</div><h3>${a.t}</h3><p>${a.d}</p></div>`).join('');
-// FAQ
-document.getElementById('faqTag').textContent=t.fq_tag;
-document.getElementById('faqTitle').innerHTML=t.fq_t;
-document.getElementById('faqList').innerHTML=t.fq.map(f=>`<div class="fq rv"><button class="fq-q" onclick="togFq(this)"><span>${f.q}</span><span class="fq-i">+</span></button><div class="fq-a">${f.a}</div></div>`).join('');
-// CTA
-document.getElementById('ctaTag').textContent=t.ct_tag;
-document.getElementById('ctaTitle').innerHTML=t.ct_t;
-document.getElementById('ctaDesc').textContent=t.ct_d;
-document.getElementById('ctaLinks').innerHTML=`<a href="tel:${c.phone.replace(/\s/g,'')}" class="cta-link"><span class="i">📞</span><div><div class="t">${t.ct_call}</div><div class="v">${c.phone}</div></div></a><a href="https://t.me/${c.tg.replace('@','')}" class="cta-link" target="_blank"><span class="i">✈️</span><div><div class="t">${t.ct_tg}</div><div class="v">${c.tg}</div></div></a>`;
-// Form
-document.getElementById('formT').textContent=t.fm_t;
-document.getElementById('fmNL').textContent=t.fm_n;
-document.getElementById('fmPL').textContent=t.fm_p;
-document.getElementById('fmAL').textContent=t.fm_a;
-document.getElementById('fmCL').textContent=t.fm_c;
-const sel=document.getElementById('fC').options;
-sel[0].textContent=t.fm_sel;sel[1].textContent=t.fm_auto;sel[2].textContent=t.fm_real;sel[3].textContent=t.fm_gold;
-document.getElementById('fmBtn').textContent=t.fm_btn;
-document.getElementById('fmPriv').textContent=t.fm_priv;
-// Footer
-const secs=HR.map((h,i)=>`<li><a href="${h}">${t.nav[i]}</a></li>`).join('');
-const svcs=t.ft_s.map(s=>`<li><a href="#collateral">${s}</a></li>`).join('');
-document.getElementById('ftGrid').innerHTML=`<div><div class="ft-brand">ALOQA</div><p class="ft-desc">${t.ft_d}</p><div class="ft-social"><a href="#">✈️</a><a href="#">📸</a><a href="#">👤</a></div></div><div><div class="ft-col-t">${t.ft_nav}</div><ul class="ft-links">${secs}</ul></div><div><div class="ft-col-t">${t.ft_svc}</div><ul class="ft-links">${svcs}</ul></div><div><div class="ft-col-t">${t.ft_con}</div><div class="ft-ci">📞 <strong>${c.phone}</strong></div><div class="ft-ci">✈️ <strong>${c.tg}</strong></div><div class="ft-ci">📧 <strong>${c.email}</strong></div><div class="ft-ci">📍 <strong>${lang==='uz'?c.addr_uz:c.addr_ru}</strong></div></div>`;
-document.getElementById('ftBtm').innerHTML=`<span>${t.ft_cp}</span>`;
-// Re-observe reveals
-document.querySelectorAll('.rv,.rvl,.rvr').forEach(el=>{if(!el.classList.contains('v'))ro.observe(el)});
-}
+    </main>
 
-function renderBr(){
-  const list=document.getElementById('brList');
-  list.innerHTML='';
-  D.br.forEach((b,i)=>{
-    const li=document.createElement('li');li.className='branch-item'+(i===0?' on':'');li.dataset.r=b.r;
-    li.innerHTML=`<span class="br-dot"></span><div><div class="br-n">${lang==='uz'?b.n_uz:b.n_ru}</div><div class="br-a">${lang==='uz'?b.a_uz:b.a_ru}</div></div>`;
-    li.onclick=()=>{document.querySelectorAll('.branch-item').forEach(x=>x.classList.remove('on'));li.classList.add('on');selReg=b.r;updMap()};
-    list.appendChild(li);
-  });
-  updMap();
-}
-function updMap(){
-  const active=D.br.map(b=>b.r);
-  document.querySelectorAll('.mr').forEach(m=>{
-    const r=m.dataset.r;m.classList.remove('dim','lit','sel');
-    if(active.includes(r)){m.classList.add('lit');if(r===selReg)m.classList.add('sel')}else m.classList.add('dim')
-  });
-}
+    <script>
+        const amountRange = document.getElementById('amount-range');
+        const periodRange = document.getElementById('period-range');
+        const amountLabel = document.getElementById('amount-label');
+        const periodLabel = document.getElementById('period-label');
+        const monthlyPayment = document.getElementById('monthly-payment');
 
-// ========== CALCULATOR ==========
-function fmt(n){return new Intl.NumberFormat('ru-RU').format(Math.round(n))}
-function calcUp(){
-  const a=+document.getElementById('amtR').value,t=+document.getElementById('trmR').value,annual=+D.calc.annualRate||0,r=annual/12/100;
-  document.getElementById('amtD').textContent=fmt(a)+' сум';
-  document.getElementById('trmD').textContent=t+T[lang].mo;
-  let m,tot;if(r===0){m=a/t;tot=a}else{m=(a*r*Math.pow(1+r,t))/(Math.pow(1+r,t)-1);tot=m*t}
-  document.getElementById('mPay').textContent=fmt(m)+' сум';
-  document.getElementById('tPay').textContent=fmt(tot)+' сум';
-}
+        function calculate() {
+            const amount = parseInt(amountRange.value);
+            const period = parseInt(periodRange.value);
+            
+            // Условная премиальная процентная ставка (например, 16% годовых)
+            const annualRate = 0.16;
+            const monthlyRate = annualRate / 12;
+            
+            const payment = (amount * monthlyRate) / (1 - Math.pow(1 + monthlyRate, -period));
+            
+            amountLabel.innerText = `Сумма займа: ${amount.toLocaleString('ru-RU')} сум`;
+            periodLabel.innerText = `Срок финансирования: ${period} месяцев`;
+            monthlyPayment.innerText = `${Math.round(payment).toLocaleString('ru-RU')} сум`;
+        }
 
-// ========== SCROLL REVEAL ==========
-const ro=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('v')})},{threshold:.12});
-
-// ========== INIT ==========
-window.addEventListener('load',()=>{
-  setTimeout(()=>document.getElementById('loader').classList.add('hide'),1800);
-  render();
-  if(location.search.includes('admin'))document.getElementById('admTrig').classList.add('vis');
-});
-window.addEventListener('scroll',()=>{document.getElementById('nav').classList.toggle('solid',scrollY>40)});
-
-// ========== LANG ==========
-function setL(l){lang=l;document.getElementById('bRu').classList.toggle('on',l==='ru');document.getElementById('bUz').classList.toggle('on',l==='uz');render()}
-
-// ========== FAQ ==========
-function togFq(b){const f=b.closest('.fq'),a=f.querySelector('.fq-a'),o=f.classList.contains('open');document.querySelectorAll('.fq.open').forEach(x=>{x.classList.remove('open');x.querySelector('.fq-a').classList.remove('open')});if(!o){f.classList.add('open');a.classList.add('open')}}
-
-// ========== FORM + BOT ==========
-async function submit(){
-  const n=document.getElementById('fN').value.trim(),p=document.getElementById('fP').value.trim(),a=document.getElementById('fA').value.trim(),c=document.getElementById('fC').value;
-  if(!n||!p){showT(T[lang].err);return}
-  const payload={source:'ALOQA site',name:n,phone:p,amount:a||'',collateral:c||'',page:location.href,created_at:new Date().toISOString()};
-  let delivered=false;
-  if(D.lead&&D.lead.webhook){
-    try{const r=await fetch(D.lead.webhook,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(payload)});delivered=r.ok}catch(e){delivered=false}
-  }
-  showT(delivered?T[lang].ok:'⚠️ Форма заполнена, но webhook не подключён. Напишите нам в Telegram.');
-  if(delivered){document.getElementById('fN').value='';document.getElementById('fP').value='';document.getElementById('fA').value='';}
-}
-
-// ========== ADMIN ==========
-function showLogin(){if(admIn){openAdm();return}document.getElementById('admLogin').classList.add('open');document.getElementById('admPass').value='';document.getElementById('admErr').style.display='none';setTimeout(()=>document.getElementById('admPass').focus(),100)}
-function checkPass(){if(document.getElementById('admPass').value===D.pass){admIn=true;document.getElementById('admLogin').classList.remove('open');openAdm()}else{document.getElementById('admErr').style.display='block'}}
-function openAdm(){document.getElementById('admOverlay').classList.add('open');document.getElementById('admPanel').classList.add('open');loadAdm()}
-function closeAdm(){document.getElementById('admOverlay').classList.remove('open');document.getElementById('admPanel').classList.remove('open')}
-function aTab(id){document.querySelectorAll('.ap-t').forEach(t=>t.classList.remove('on'));document.querySelectorAll('.ap-tc').forEach(t=>t.classList.remove('on'));document.querySelector(`.ap-t[onclick="aTab('${id}')"]`).classList.add('on');document.getElementById('tc-'+id).classList.add('on')}
-function loadAdm(){
-  document.getElementById('a-phone').value=D.con.phone;document.getElementById('a-tg').value=D.con.tg;document.getElementById('a-email').value=D.con.email;document.getElementById('a-addr-ru').value=D.con.addr_ru;document.getElementById('a-addr-uz').value=D.con.addr_uz;
-  document.getElementById('a-rate').value=D.calc.annualRate;document.getElementById('a-yearly').textContent=((+D.calc.annualRate||0)/12).toFixed(2).replace(/\.00$/,'')+'%';document.getElementById('a-min').value=D.calc.min;document.getElementById('a-max').value=D.calc.max;document.getElementById('a-step').value=D.calc.step;document.getElementById('a-tmin').value=D.calc.tmin;document.getElementById('a-tmax').value=D.calc.tmax;
-  document.getElementById('a-rate').oninput=function(){document.getElementById('a-yearly').textContent=((parseFloat(this.value||0))/12).toFixed(2).replace(/\.00$/,'')+'%'};
-  document.getElementById('a-clients').value=D.abt.clients;document.getElementById('a-loans').value=D.abt.loans;document.getElementById('a-bcount').value=D.abt.bcount;document.getElementById('a-mission').value=D.abt.mission;document.getElementById('a-values').value=D.abt.vals;document.getElementById('a-goal').value=D.abt.goal;
-  document.getElementById('a-webhook').value=(D.lead&&D.lead.webhook)||'';
-  renderBrAdm();
-}
-function renderBrAdm(){const c=document.getElementById('brAdm');c.innerHTML='';D.br.forEach((b,i)=>{c.innerHTML+=`<div class="ba-item"><input value="${b.n_ru}" onchange="D.br[${i}].n_ru=this.value" placeholder="RU" style="width:80px"><input value="${b.n_uz}" onchange="D.br[${i}].n_uz=this.value" placeholder="UZ" style="width:80px"><select onchange="D.br[${i}].r=this.value">${REGS.map(r=>`<option value="${r}"${r===b.r?' selected':''}>${RN[r]}</option>`).join('')}</select><button class="ap-sm ap-danger" onclick="D.br.splice(${i},1);renderBrAdm()">✕</button></div><div class="ba-item" style="margin-top:-2px"><input value="${b.a_ru}" onchange="D.br[${i}].a_ru=this.value" placeholder="Адрес RU" style="flex:1"><input value="${b.a_uz}" onchange="D.br[${i}].a_uz=this.value" placeholder="Адрес UZ" style="flex:1"></div>`})}
-function addBr(){D.br.push({n_ru:'Новый',n_uz:'Yangi',a_ru:'Адрес',a_uz:'Manzil',r:'buxoro'});renderBrAdm()}
-function saveCon(){D.con={phone:document.getElementById('a-phone').value,tg:document.getElementById('a-tg').value,email:document.getElementById('a-email').value,addr_ru:document.getElementById('a-addr-ru').value,addr_uz:document.getElementById('a-addr-uz').value};SS('con',D.con);render();showT('✅ Сохранено')}
-function saveCalc(){D.calc={annualRate:+document.getElementById('a-rate').value||36,min:+document.getElementById('a-min').value||5e6,max:+document.getElementById('a-max').value||3e8,step:+document.getElementById('a-step').value||5e6,tmin:+document.getElementById('a-tmin').value||3,tmax:+document.getElementById('a-tmax').value||60};SS('calc',D.calc);render();showT('✅ Сохранено')}
-function saveBr(){SS('br',D.br);render();showT('✅ Сохранено')}
-function saveAbt(){D.abt={clients:document.getElementById('a-clients').value,loans:document.getElementById('a-loans').value,bcount:document.getElementById('a-bcount').value,mission:document.getElementById('a-mission').value,vals:document.getElementById('a-values').value,goal:document.getElementById('a-goal').value};SS('abt',D.abt);render();showT('✅ Сохранено')}
-function saveBot(){D.lead={webhook:document.getElementById('a-webhook').value.trim()};SS('lead',D.lead);showT('✅ Webhook сохранён')}
-async function testBot(){if(!D.lead||!D.lead.webhook){showT('❌ Укажите Webhook URL');return}try{const r=await fetch(D.lead.webhook,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({source:'ALOQA test',name:'Тест',phone:'+998 00 000 00 00',amount:'0',collateral:'test',created_at:new Date().toISOString()})});showT(r.ok?'✅ Webhook работает!':'❌ Webhook вернул ошибку')}catch(e){showT('❌ Ошибка подключения к webhook')}}
-function chPass(){const o=document.getElementById('a-oldp').value,n=document.getElementById('a-newp').value,n2=document.getElementById('a-newp2').value;if(o!==D.pass){showT('❌ Неверный пароль');return}if(!n||n.length<4){showT('❌ Мин. 4 символа');return}if(n!==n2){showT('❌ Не совпадают');return}D.pass=n;SS('pass',n);showT('✅ Пароль изменён');document.getElementById('a-oldp').value='';document.getElementById('a-newp').value='';document.getElementById('a-newp2').value=''}
-
-// Map tooltips
-document.querySelectorAll('.mr').forEach(m=>{
-  m.addEventListener('mouseenter',e=>{const r=m.dataset.r,n=RN[r],br=D.br.find(b=>b.r===r),tip=document.getElementById('mapTip');tip.innerHTML=`<strong>${n}</strong>${br?`<br><span style="color:var(--ink4);font-size:.72rem">${lang==='uz'?br.a_uz:br.a_ru}</span>`:''}`;tip.classList.add('show');const bx=document.querySelector('.map-box').getBoundingClientRect();tip.style.left=Math.min(e.clientX-bx.left+12,bx.width-180)+'px';tip.style.top=(e.clientY-bx.top-10)+'px'});
-  m.addEventListener('mouseleave',()=>document.getElementById('mapTip').classList.remove('show'));
-  m.addEventListener('mousemove',e=>{const bx=document.querySelector('.map-box').getBoundingClientRect(),tip=document.getElementById('mapTip');tip.style.left=Math.min(e.clientX-bx.left+12,bx.width-180)+'px';tip.style.top=(e.clientY-bx.top-10)+'px'});
-  m.addEventListener('click',()=>{selReg=m.dataset.r;updMap();document.querySelectorAll('.branch-item').forEach(b=>b.classList.toggle('on',b.dataset.r===m.dataset.r))});
-});
-
-function showT(m){const t=document.getElementById('toast');t.innerHTML=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),4e3)}
-function go(s){document.querySelector(s).scrollIntoView({behavior:'smooth'})}
-function togMob(){document.getElementById('mobMenu').classList.toggle('open')}
-function closeMob(){document.getElementById('mobMenu').classList.remove('open')}
-</script>
+        amountRange.addEventListener('input', calculate);
+        periodRange.addEventListener('input', calculate);
+    </script>
 </body>
-</html>
 </html>
