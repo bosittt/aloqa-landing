@@ -218,9 +218,21 @@ footer{background:var(--text);color:rgba(255,255,255,.7);padding:3.5rem 2rem 1.5
 .mobile-menu.open{display:flex}
 .mobile-menu a{color:var(--text2);text-decoration:none;font-weight:500;padding:.6rem 0;border-bottom:1px solid var(--border);font-size:.9rem}
 
-/* Admin trigger */
-.admin-trigger{position:fixed;bottom:1rem;left:1rem;width:36px;height:36px;background:var(--blue);color:#fff;border:none;border-radius:8px;cursor:pointer;font-size:.8rem;z-index:9998;display:flex;align-items:center;justify-content:center;opacity:.4;transition:opacity .2s}
-.admin-trigger:hover{opacity:1}
+/* Admin trigger - hidden by default, only via ?admin URL */
+.admin-trigger{display:none;position:fixed;bottom:1rem;left:1rem;width:36px;height:36px;background:var(--blue);color:#fff;border:none;border-radius:8px;cursor:pointer;font-size:.8rem;z-index:9998;align-items:center;justify-content:center}
+.admin-trigger.visible{display:flex}
+
+/* Admin login */
+.admin-login-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:9995;backdrop-filter:blur(4px);align-items:center;justify-content:center}
+.admin-login-overlay.open{display:flex}
+.admin-login-box{background:#fff;border-radius:16px;padding:2rem;width:340px;max-width:90vw;box-shadow:0 20px 60px rgba(0,0,0,.2);text-align:center}
+.admin-login-box h3{font-size:1.1rem;font-weight:800;color:var(--text);margin-bottom:.3rem}
+.admin-login-box p{font-size:.78rem;color:var(--text3);margin-bottom:1.2rem}
+.admin-login-box input{width:100%;padding:.7rem 1rem;border:1px solid var(--border);border-radius:8px;font-size:.9rem;outline:none;text-align:center;margin-bottom:.8rem;font-family:inherit}
+.admin-login-box input:focus{border-color:var(--blue)}
+.admin-login-box .login-btn{width:100%;padding:.7rem;background:var(--blue);color:#fff;border:none;border-radius:8px;font-weight:700;font-size:.88rem;cursor:pointer;transition:all .2s}
+.admin-login-box .login-btn:hover{background:var(--blue-dark)}
+.admin-login-error{color:#e53e3e;font-size:.75rem;margin-bottom:.5rem;display:none}
 
 /* ===== ADMIN PANEL ===== */
 .admin-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:9990;backdrop-filter:blur(4px)}
@@ -262,8 +274,20 @@ footer{background:var(--text);color:rgba(255,255,255,.7);padding:3.5rem 2rem 1.5
 <div id="loader"><div class="loader-inner"><div class="loader-logo-text">ALOQA <span>Mikromoliya</span></div><div class="loader-bar-wrap"><div class="loader-bar"></div></div></div></div>
 <div class="toast" id="toast"></div>
 
-<!-- Admin trigger -->
-<button class="admin-trigger" onclick="toggleAdmin()" title="Админ-панель">⚙</button>
+<!-- Admin trigger (hidden, only via ?admin URL) -->
+<button class="admin-trigger" id="adminTrigger" onclick="showAdminLogin()" title="Админ-панель">⚙</button>
+
+<!-- Admin Login -->
+<div class="admin-login-overlay" id="adminLogin">
+<div class="admin-login-box">
+<h3>🔐 Вход в админку</h3>
+<p>Введите пароль для доступа к панели управления</p>
+<div class="admin-login-error" id="loginError">Неверный пароль</div>
+<input type="password" id="adminPassword" placeholder="Пароль" onkeydown="if(event.key==='Enter')checkPassword()">
+<button class="login-btn" onclick="checkPassword()">Войти</button>
+<p style="font-size:.65rem;color:var(--text3);margin-top:.8rem">Пароль по умолчанию: <b>aloqa2025</b><br>Смените его в настройках админки</p>
+</div>
+</div>
 
 <!-- Admin overlay -->
 <div class="admin-overlay" id="adminOverlay" onclick="toggleAdmin()"></div>
@@ -276,7 +300,9 @@ footer{background:var(--text);color:rgba(255,255,255,.7);padding:3.5rem 2rem 1.5
 <button class="ap-tab active" onclick="switchTab('contacts')">Контакты</button>
 <button class="ap-tab" onclick="switchTab('branches')">Филиалы</button>
 <button class="ap-tab" onclick="switchTab('about')">О нас</button>
+<button class="ap-tab" onclick="switchTab('calc')">Расчёты</button>
 <button class="ap-tab" onclick="switchTab('bot')">Telegram бот</button>
+<button class="ap-tab" onclick="switchTab('security')">Безопасность</button>
 </div>
 
 <!-- Contacts Tab -->
@@ -319,6 +345,41 @@ footer{background:var(--text);color:rgba(255,255,255,.7);padding:3.5rem 2rem 1.5
 </div>
 </div>
 
+<!-- Calculator Tab -->
+<div class="ap-tab-content" id="tab-calc">
+<div class="ap-section">
+<div class="ap-section-title">Настройки кредитного калькулятора</div>
+<p style="font-size:.78rem;color:var(--text3);margin-bottom:.8rem">Здесь можно задать годовую ставку, диапазон суммы, срок и формулу расчёта. После сохранения калькулятор на сайте пересчитывает всё автоматически.</p>
+<div class="form-row">
+<div class="ap-field"><label>Годовая ставка (%)</label><input id="adm-calc-annual-rate" type="number" min="0" step="0.01" value="36"></div>
+<div class="ap-field"><label>Формула расчёта</label>
+<select id="adm-calc-type">
+<option value="annuity">Аннуитетный платёж</option>
+<option value="equal_principal">Равный основной долг</option>
+<option value="simple">Простой процент</option>
+</select></div>
+</div>
+<div class="form-row">
+<div class="ap-field"><label>Мин. сумма</label><input id="adm-calc-min-amount" type="number" min="0" step="100000" value="5000000"></div>
+<div class="ap-field"><label>Макс. сумма</label><input id="adm-calc-max-amount" type="number" min="0" step="100000" value="300000000"></div>
+</div>
+<div class="form-row">
+<div class="ap-field"><label>Шаг суммы</label><input id="adm-calc-step-amount" type="number" min="1" step="100000" value="5000000"></div>
+<div class="ap-field"><label>Сумма по умолчанию</label><input id="adm-calc-default-amount" type="number" min="0" step="100000" value="50000000"></div>
+</div>
+<div class="form-row">
+<div class="ap-field"><label>Мин. срок (мес.)</label><input id="adm-calc-min-term" type="number" min="1" step="1" value="3"></div>
+<div class="ap-field"><label>Макс. срок (мес.)</label><input id="adm-calc-max-term" type="number" min="1" step="1" value="60"></div>
+</div>
+<div class="form-row">
+<div class="ap-field"><label>Срок по умолчанию (мес.)</label><input id="adm-calc-default-term" type="number" min="1" step="1" value="12"></div>
+<div class="ap-field"><label>Единовременная комиссия (%)</label><input id="adm-calc-fee" type="number" min="0" step="0.01" value="0"></div>
+</div>
+<button class="ap-save" onclick="saveCalcSettings()">💾 Сохранить расчёты</button>
+<button class="ap-btn-sm" onclick="resetCalcSettings()" style="margin-top:.5rem">↺ Сбросить по умолчанию</button>
+</div>
+</div>
+
 <!-- Bot Tab -->
 <div class="ap-tab-content" id="tab-bot">
 <div class="ap-section">
@@ -332,6 +393,24 @@ footer{background:var(--text);color:rgba(255,255,255,.7);padding:3.5rem 2rem 1.5
 <button class="ap-btn-sm" onclick="testBot()" style="margin-top:.5rem">🧪 Тестовое сообщение</button>
 </div>
 </div>
+
+<!-- Security Tab -->
+<div class="ap-tab-content" id="tab-security">
+<div class="ap-section">
+<div class="ap-section-title">Сменить пароль админки</div>
+<p style="font-size:.78rem;color:var(--text3);margin-bottom:.8rem">Этот пароль нужен для входа в эту панель управления.</p>
+<div class="ap-field"><label>Текущий пароль</label><input id="adm-old-pass" type="password" placeholder="Введите текущий пароль"></div>
+<div class="ap-field"><label>Новый пароль</label><input id="adm-new-pass" type="password" placeholder="Введите новый пароль"></div>
+<div class="ap-field"><label>Повторите новый пароль</label><input id="adm-new-pass2" type="password" placeholder="Повторите новый пароль"></div>
+<button class="ap-save" onclick="changePassword()">🔐 Сменить пароль</button>
+</div>
+<div class="ap-section">
+<div class="ap-section-title">Ссылка на админку</div>
+<p style="font-size:.78rem;color:var(--text3);margin-bottom:.5rem">Чтобы войти в админку, добавьте <b>?admin</b> в конец адреса сайта:</p>
+<div style="background:var(--bg2);padding:.6rem .8rem;border-radius:8px;font-size:.82rem;font-weight:600;color:var(--blue);word-break:break-all">vashsayt.uz<b>?admin</b></div>
+</div>
+</div>
+
 </div>
 </div>
 
@@ -376,7 +455,7 @@ footer{background:var(--text);color:rgba(255,255,255,.7);padding:3.5rem 2rem 1.5
 <p class="calc-sub" data-t="calc_sub">Рассчитайте ежемесячный платёж</p>
 <div class="calc-field"><div class="calc-label"><span data-t="calc_amount">Сумма кредита</span><span id="amountDisplay">50 000 000 сум</span></div><input type="range" class="slider" id="amountSlider" min="5000000" max="300000000" step="5000000" value="50000000" oninput="calcUpdate()"></div>
 <div class="calc-field"><div class="calc-label"><span data-t="calc_term">Срок кредита</span><span id="termDisplay">12 мес</span></div><input type="range" class="slider" id="termSlider" min="3" max="60" step="1" value="12" oninput="calcUpdate()"></div>
-<div class="rate-row"><span class="rate-label" data-t="calc_rate">Процентная ставка</span><span class="rate-value">3% / мес</span></div>
+<div class="rate-row"><span class="rate-label" data-t="calc_rate">Процентная ставка</span><span class="rate-value" id="rateDisplay">36% / год</span></div>
 <div class="calc-row">
 <div class="calc-result"><div class="result-label" data-t="calc_monthly">Ежемесячный платёж</div><div class="result-value" id="monthlyPayment">—</div></div>
 <div class="calc-result"><div class="result-label" data-t="calc_total">Итоговая сумма</div><div class="result-value" id="totalPayment">—</div></div>
@@ -584,6 +663,8 @@ let branches = getStore('branches', DEFAULT_BRANCHES);
 let contacts = getStore('contacts', {phone:'+998 71 200 44 04',tg:'@aloqa_uz',email:'info@aloqa.uz',addr_ru:'Ташкент, ул. Навои 12',addr_uz:"Toshkent, Navoiy ko'chasi 12"});
 let botConfig = getStore('bot', {token:'',chatId:'',mode:'both'});
 let aboutData = getStore('about', {clients:'5000+',loans:'50 млрд',branchCount:'5',mission_ru:'Обеспечивать доступность финансовых услуг для каждого гражданина.',values_ru:'Честность, прозрачность и ответственность в каждой сделке.',goal_ru:'Ведущая микрофинансовая организация Центральной Азии к 2027 году.'});
+const DEFAULT_CALC_CONFIG = {annualRate:36,calcType:'annuity',minAmount:5000000,maxAmount:300000000,stepAmount:5000000,defaultAmount:50000000,minTerm:3,maxTerm:60,defaultTerm:12,feePercent:0};
+let calcConfig = getStore('calc', DEFAULT_CALC_CONFIG);
 
 let currentLang = 'ru';
 let selectedRegion = null;
@@ -618,10 +699,12 @@ window.addEventListener('load',()=>{
   document.getElementById('adm-bot-token').value=botConfig.token;
   document.getElementById('adm-bot-chat').value=botConfig.chatId;
   document.getElementById('adm-submit-mode').value=botConfig.mode;
+  loadCalcAdminFields();
+  applyCalcSettings();
 });
 
 // ===== LANG =====
-function setLang(l){currentLang=l;document.getElementById('btn-ru').classList.toggle('active',l==='ru');document.getElementById('btn-uz').classList.toggle('active',l==='uz');const t=i18n[l];document.querySelectorAll('[data-t]').forEach(el=>{const k=el.getAttribute('data-t');if(t[k]!==undefined)el.innerHTML=t[k]});renderBranches();applyContacts();applyAbout()}
+function setLang(l){currentLang=l;document.getElementById('btn-ru').classList.toggle('active',l==='ru');document.getElementById('btn-uz').classList.toggle('active',l==='uz');const t=i18n[l];document.querySelectorAll('[data-t]').forEach(el=>{const k=el.getAttribute('data-t');if(t[k]!==undefined)el.innerHTML=t[k]});renderBranches();applyContacts();applyAbout();calcUpdate()}
 
 // ===== CONTACTS =====
 function applyContacts(){
@@ -737,12 +820,141 @@ async function submitForm(){
 }
 
 // ===== ADMIN =====
-function toggleAdmin(){document.getElementById('adminOverlay').classList.toggle('open');document.getElementById('adminPanel').classList.toggle('open')}
+// ===== ADMIN AUTH =====
+const DEFAULT_PASS = 'aloqa2025';
+function getAdminPass(){try{return localStorage.getItem('aloqa_admin_pass')||DEFAULT_PASS}catch(e){return DEFAULT_PASS}}
+function setAdminPass(p){try{localStorage.setItem('aloqa_admin_pass',p)}catch(e){}}
+let adminLoggedIn = false;
+
+// Show admin button only if ?admin is in URL
+if(window.location.search.includes('admin')){
+  document.getElementById('adminTrigger').classList.add('visible');
+}
+
+function showAdminLogin(){
+  if(adminLoggedIn){toggleAdmin();return}
+  document.getElementById('adminLogin').classList.add('open');
+  document.getElementById('adminPassword').value='';
+  document.getElementById('loginError').style.display='none';
+  setTimeout(()=>document.getElementById('adminPassword').focus(),100);
+}
+function checkPassword(){
+  const pass=document.getElementById('adminPassword').value;
+  if(pass===getAdminPass()){
+    adminLoggedIn=true;
+    document.getElementById('adminLogin').classList.remove('open');
+    toggleAdmin();
+  } else {
+    document.getElementById('loginError').style.display='block';
+    document.getElementById('adminPassword').value='';
+  }
+}
+function toggleAdmin(){
+  if(!adminLoggedIn)return;
+  document.getElementById('adminOverlay').classList.toggle('open');
+  document.getElementById('adminPanel').classList.toggle('open');
+}
+function changePassword(){
+  const old=document.getElementById('adm-old-pass').value;
+  const n1=document.getElementById('adm-new-pass').value;
+  const n2=document.getElementById('adm-new-pass2').value;
+  if(old!==getAdminPass()){showToast('❌ Текущий пароль неверный');return}
+  if(!n1||n1.length<4){showToast('❌ Новый пароль слишком короткий (мин. 4 символа)');return}
+  if(n1!==n2){showToast('❌ Пароли не совпадают');return}
+  setAdminPass(n1);
+  document.getElementById('adm-old-pass').value='';
+  document.getElementById('adm-new-pass').value='';
+  document.getElementById('adm-new-pass2').value='';
+  showToast('✅ Пароль изменён!');
+}
 function switchTab(id){document.querySelectorAll('.ap-tab').forEach(t=>t.classList.remove('active'));document.querySelectorAll('.ap-tab-content').forEach(t=>t.classList.remove('active'));document.querySelector(`.ap-tab[onclick="switchTab('${id}')"]`).classList.add('active');document.getElementById('tab-'+id).classList.add('active')}
 
 // ===== CALCULATOR =====
-function fmtNum(n){return new Intl.NumberFormat('ru-RU').format(Math.round(n))}
-function calcUpdate(){const a=+document.getElementById('amountSlider').value,t=+document.getElementById('termSlider').value,r=.03;document.getElementById('amountDisplay').textContent=fmtNum(a)+' сум';document.getElementById('termDisplay').textContent=t+(currentLang==='uz'?' oy':' мес');const m=(a*r*Math.pow(1+r,t))/(Math.pow(1+r,t)-1),tot=m*t;document.getElementById('monthlyPayment').textContent=fmtNum(m)+' сум';document.getElementById('totalPayment').textContent=fmtNum(tot)+' сум'}
+function fmtNum(n){return new Intl.NumberFormat('ru-RU').format(Math.round(Number(n)||0))}
+function toNum(v, fallback=0){const n=Number(String(v).replace(',', '.'));return Number.isFinite(n)?n:fallback}
+function clamp(n,min,max){return Math.min(Math.max(n,min),max)}
+function normalizeCalcConfig(cfg){
+  const c={...DEFAULT_CALC_CONFIG,...cfg};
+  c.annualRate=Math.max(0,toNum(c.annualRate,DEFAULT_CALC_CONFIG.annualRate));
+  c.feePercent=Math.max(0,toNum(c.feePercent,0));
+  c.minAmount=Math.max(0,Math.round(toNum(c.minAmount,DEFAULT_CALC_CONFIG.minAmount)));
+  c.maxAmount=Math.max(c.minAmount,Math.round(toNum(c.maxAmount,DEFAULT_CALC_CONFIG.maxAmount)));
+  c.stepAmount=Math.max(1,Math.round(toNum(c.stepAmount,DEFAULT_CALC_CONFIG.stepAmount)));
+  c.defaultAmount=clamp(Math.round(toNum(c.defaultAmount,DEFAULT_CALC_CONFIG.defaultAmount)),c.minAmount,c.maxAmount);
+  c.minTerm=Math.max(1,Math.round(toNum(c.minTerm,DEFAULT_CALC_CONFIG.minTerm)));
+  c.maxTerm=Math.max(c.minTerm,Math.round(toNum(c.maxTerm,DEFAULT_CALC_CONFIG.maxTerm)));
+  c.defaultTerm=clamp(Math.round(toNum(c.defaultTerm,DEFAULT_CALC_CONFIG.defaultTerm)),c.minTerm,c.maxTerm);
+  if(!['annuity','equal_principal','simple'].includes(c.calcType))c.calcType='annuity';
+  return c;
+}
+function loadCalcAdminFields(){
+  calcConfig=normalizeCalcConfig(calcConfig);
+  const set=(id,v)=>{const el=document.getElementById(id);if(el)el.value=v};
+  set('adm-calc-annual-rate',calcConfig.annualRate);
+  set('adm-calc-type',calcConfig.calcType);
+  set('adm-calc-min-amount',calcConfig.minAmount);
+  set('adm-calc-max-amount',calcConfig.maxAmount);
+  set('adm-calc-step-amount',calcConfig.stepAmount);
+  set('adm-calc-default-amount',calcConfig.defaultAmount);
+  set('adm-calc-min-term',calcConfig.minTerm);
+  set('adm-calc-max-term',calcConfig.maxTerm);
+  set('adm-calc-default-term',calcConfig.defaultTerm);
+  set('adm-calc-fee',calcConfig.feePercent);
+}
+function applyCalcSettings(){
+  calcConfig=normalizeCalcConfig(calcConfig);
+  const amount=document.getElementById('amountSlider'), term=document.getElementById('termSlider');
+  if(amount){amount.min=calcConfig.minAmount;amount.max=calcConfig.maxAmount;amount.step=calcConfig.stepAmount;amount.value=clamp(toNum(amount.value,calcConfig.defaultAmount),calcConfig.minAmount,calcConfig.maxAmount)}
+  if(term){term.min=calcConfig.minTerm;term.max=calcConfig.maxTerm;term.step=1;term.value=clamp(toNum(term.value,calcConfig.defaultTerm),calcConfig.minTerm,calcConfig.maxTerm)}
+  calcUpdate();
+}
+function saveCalcSettings(){
+  calcConfig=normalizeCalcConfig({
+    annualRate:document.getElementById('adm-calc-annual-rate').value,
+    calcType:document.getElementById('adm-calc-type').value,
+    minAmount:document.getElementById('adm-calc-min-amount').value,
+    maxAmount:document.getElementById('adm-calc-max-amount').value,
+    stepAmount:document.getElementById('adm-calc-step-amount').value,
+    defaultAmount:document.getElementById('adm-calc-default-amount').value,
+    minTerm:document.getElementById('adm-calc-min-term').value,
+    maxTerm:document.getElementById('adm-calc-max-term').value,
+    defaultTerm:document.getElementById('adm-calc-default-term').value,
+    feePercent:document.getElementById('adm-calc-fee').value
+  });
+  setStore('calc',calcConfig);
+  loadCalcAdminFields();
+  const amount=document.getElementById('amountSlider'), term=document.getElementById('termSlider');
+  if(amount)amount.value=calcConfig.defaultAmount;
+  if(term)term.value=calcConfig.defaultTerm;
+  applyCalcSettings();
+  showToast('✅ Настройки расчёта сохранены');
+}
+function resetCalcSettings(){calcConfig={...DEFAULT_CALC_CONFIG};setStore('calc',calcConfig);loadCalcAdminFields();applyCalcSettings();showToast('✅ Настройки сброшены')}
+function calcUpdate(){
+  const amountEl=document.getElementById('amountSlider'),termEl=document.getElementById('termSlider');
+  if(!amountEl||!termEl)return;
+  calcConfig=normalizeCalcConfig(calcConfig);
+  const a=toNum(amountEl.value,calcConfig.defaultAmount),t=toNum(termEl.value,calcConfig.defaultTerm);
+  const monthlyRate=calcConfig.annualRate/100/12,fee=a*calcConfig.feePercent/100;
+  let monthly=0,total=0;
+  if(calcConfig.calcType==='annuity'){
+    monthly=monthlyRate>0?(a*monthlyRate*Math.pow(1+monthlyRate,t))/(Math.pow(1+monthlyRate,t)-1):a/t;
+    total=monthly*t+fee;
+  }else if(calcConfig.calcType==='equal_principal'){
+    const principal=a/t;
+    monthly=principal+a*monthlyRate;
+    total=a+(a*monthlyRate*(t+1)/2)+fee;
+  }else{
+    total=a+(a*monthlyRate*t)+fee;
+    monthly=total/t;
+  }
+  document.getElementById('amountDisplay').textContent=fmtNum(a)+' сум';
+  document.getElementById('termDisplay').textContent=t+(currentLang==='uz'?' oy':' мес');
+  const rateText=calcConfig.annualRate+'% '+(currentLang==='uz'?'/ yil':'/ год')+(calcConfig.feePercent>0?' + '+calcConfig.feePercent+'% комиссия':'');
+  const rd=document.getElementById('rateDisplay');if(rd)rd.textContent=rateText;
+  document.getElementById('monthlyPayment').textContent=fmtNum(monthly)+' сум';
+  document.getElementById('totalPayment').textContent=fmtNum(total)+' сум';
+}
 
 // ===== SCROLL REVEAL =====
 const ro=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('visible');if(x.target.hasAttribute('data-counter')){const el=x.target;if(!el.dataset.counted){el.dataset.counted='1';const target=+el.dataset.counter,suffix=el.dataset.suffix||'',dur=1800,start=performance.now();(function u(now){const p=Math.min((now-start)/dur,1),ease=1-Math.pow(1-p,3);el.textContent=Math.floor(ease*target)+suffix;if(p<1)requestAnimationFrame(u)})(performance.now())}}}})},{threshold:.15});
@@ -781,3 +993,4 @@ document.querySelectorAll('.map-region').forEach(r=>{
 </script>
 </body>
 </html>
+
