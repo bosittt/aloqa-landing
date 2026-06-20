@@ -41,9 +41,9 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:-1;opa
 .loader-fill{height:100%;background:linear-gradient(90deg,var(--brand),var(--brand-l));border-radius:3px;animation:loadFill 1.8s ease forwards}
 @keyframes loadFill{to{width:100%}}
 
-/* === NAV === */
-.nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:1rem 3rem;display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,0);backdrop-filter:blur(0px);transition:all .4s}
-.nav.solid{background:rgba(255,255,255,.92);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--line);box-shadow:0 1px 12px rgba(0,0,0,.04)}
+/* === NAV (floating island) === */
+.nav{position:fixed;top:1rem;left:1.5rem;right:1.5rem;z-index:100;padding:.85rem 1.8rem;display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,.78);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.6);border-radius:18px;box-shadow:0 8px 32px rgba(28,63,122,.10),0 1px 4px rgba(0,0,0,.04);transition:all .35s cubic-bezier(.22,1,.36,1);max-width:1400px;margin:0 auto}
+.nav.solid{top:.7rem;background:rgba(255,255,255,.95);box-shadow:0 12px 40px rgba(28,63,122,.16),0 2px 8px rgba(0,0,0,.06);border-color:rgba(255,255,255,.8)}
 .nav-logo{display:flex;align-items:center;gap:.6rem;text-decoration:none}
 .nav-logo svg{width:32px;height:32px}
 .nav-logo-t{font-size:1.1rem;font-weight:900;color:var(--brand);letter-spacing:-.02em;line-height:1}
@@ -59,7 +59,7 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:-1;opa
 .nav-btn:hover{background:var(--brand-d);transform:translateY(-1px);box-shadow:var(--sh2)}
 .burger{display:none;flex-direction:column;gap:4px;cursor:pointer;padding:5px}
 .burger i{display:block;width:18px;height:2px;background:var(--ink);border-radius:2px}
-.mob-menu{display:none;position:fixed;top:64px;left:0;right:0;background:rgba(255,255,255,.98);backdrop-filter:blur(16px);border-bottom:1px solid var(--line);padding:1.5rem 2rem;z-index:99;flex-direction:column;gap:.6rem}
+.mob-menu{display:none;position:fixed;top:5.2rem;left:1.5rem;right:1.5rem;background:rgba(255,255,255,.98);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.6);border-radius:16px;box-shadow:0 12px 40px rgba(28,63,122,.14);padding:1.5rem 2rem;z-index:99;flex-direction:column;gap:.6rem}
 .mob-menu.open{display:flex}
 .mob-menu a{font-size:.92rem;font-weight:500;color:var(--ink2);text-decoration:none;padding:.7rem 0;border-bottom:1px solid var(--line)}
 
@@ -286,7 +286,7 @@ input[type=range]::-webkit-slider-thumb:hover{box-shadow:0 0 0 8px rgba(44,94,17
 @keyframes orbFlowC{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(-40px,-45px) scale(1.1)}}
 
 /* Make sure content sits above the ambient layers */
-.nav,.hero,.sec,.cta,.ft,.loader,.adm-shell{position:relative;z-index:1}
+.hero,.sec,.cta,.ft,.loader,.adm-shell{position:relative;z-index:1}
 
 /* Glass surfaces */
 .nav.solid{background:rgba(255,255,255,.62);backdrop-filter:blur(24px) saturate(160%);border-bottom:1px solid rgba(255,255,255,.5);box-shadow:0 1px 0 rgba(255,255,255,.4),0 8px 32px rgba(28,63,122,.06)}
