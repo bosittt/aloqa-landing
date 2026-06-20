@@ -353,6 +353,7 @@ input[type=range]::-webkit-slider-thumb:hover{box-shadow:0 0 0 8px rgba(44,94,17
 <button class="ap-t on" onclick="aTab('con')">Контакты</button>
 <button class="ap-t" onclick="aTab('calc')">Калькулятор</button>
 <button class="ap-t" onclick="aTab('br')">Филиалы</button>
+<button class="ap-t" onclick="aTab('coll')">Виды залога</button>
 <button class="ap-t" onclick="aTab('abt')">О компании</button>
 <button class="ap-t" onclick="aTab('bot')">Telegram</button>
 <button class="ap-t" onclick="aTab('sec')">Пароль</button>
@@ -381,6 +382,10 @@ input[type=range]::-webkit-slider-thumb:hover{box-shadow:0 0 0 8px rgba(44,94,17
 <div class="ap-tc" id="tc-br"><div class="ap-st">Филиалы</div><div id="brAdm"></div>
 <button class="ap-sm" onclick="addBr()" style="margin-top:.5rem">+ Добавить</button>
 <button class="ap-save" onclick="saveBr()" style="margin-top:.8rem">💾 Сохранить</button></div>
+<!-- Collateral types -->
+<div class="ap-tc" id="tc-coll"><div class="ap-st">Виды залога</div><div id="collAdm"></div>
+<button class="ap-sm" onclick="addColl()" style="margin-top:.5rem">+ Добавить вид залога</button>
+<button class="ap-save" onclick="saveColl()" style="margin-top:.8rem">💾 Сохранить</button></div>
 <!-- About -->
 <div class="ap-tc" id="tc-abt"><div class="ap-st">Статистика</div>
 <div class="ap-f"><label>Клиентов</label><input id="a-clients"></div>
@@ -479,7 +484,7 @@ input[type=range]::-webkit-slider-thumb:hover{box-shadow:0 0 0 8px rgba(44,94,17
 <div class="cta-form rvr"><h3 id="formT"></h3>
 <div class="fg"><label id="fmNL"></label><input id="fN" placeholder=""></div>
 <div class="fg-row"><div class="fg"><label id="fmPL"></label><input id="fP" type="tel" placeholder="+998"></div><div class="fg"><label id="fmAL"></label><input id="fA" placeholder=""></div></div>
-<div class="fg"><label id="fmCL"></label><select id="fC"><option value=""></option><option value="auto"></option><option value="realty"></option><option value="gold"></option></select></div>
+<div class="fg"><label id="fmCL"></label><select id="fC"></select></div>
 <div class="fg"><label id="fmRL"></label><select id="fR"></select></div>
 <button class="sub-btn" id="fmBtn" onclick="submit()"></button>
 <p style="font-size:.65rem;color:var(--ink4);margin-top:.6rem;text-align:center" id="fmPriv"></p>
@@ -506,6 +511,10 @@ br:LS('br')||[
 {n_ru:'Самарканд',n_uz:'Samarqand',a_ru:'ул. Ш. Рашидов 23',a_uz:'Sh. Rashidov 23',r:'samarqand'},
 {n_ru:'Нукус',n_uz:'Nukus',a_ru:'ул. А. Дощанов 5',a_uz:'A. Doshjanov 5',r:'karakalpakstan'}],
 abt:LS('abt')||{clients:'5 000+',loans:'50 млрд',bcount:'5',mission:'Обеспечивать доступность финансовых услуг для каждого гражданина Узбекистана.',vals:'Честность, прозрачность и ответственность в каждой сделке.',goal:'Ведущая микрофинансовая организация Центральной Азии к 2027 году.'},
+coll:LS('coll')||[
+{id:'auto',i:'🚗',t_ru:'Автомобиль',t_uz:'Avtomobil',d_ru:'Легковые, грузовые и коммерческие. Оценка в день обращения.',d_uz:'Yengil, yuk va tijorat avtomobillari.',b_ru:'Быстрая оценка',b_uz:'Tezkor baholash'},
+{id:'realty',i:'🏠',t_ru:'Недвижимость',t_uz:"Ko'chmas mulk",d_ru:'Квартиры, дома, помещения. Крупные суммы, длительные сроки.',d_uz:'Kvartira, uy, xonalar.',b_ru:'Крупные суммы',b_uz:'Katta summalar'},
+{id:'gold',i:'🪙',t_ru:'Золотые изделия',t_uz:'Oltin buyumlar',d_ru:'Золотые украшения и изделия. Профессиональная оценка в день обращения.',d_uz:'Oltin zargarlik buyumlari.',b_ru:'Выгодные условия',b_uz:'Qulay shartlar'}],
 lead:(()=>{const v=LS('lead');if(v)return v;const old=LS('bot');return old&&old.webhook?old:{webhook:''}})(),
 pass:LS('pass')||'aloqa2025'
 };
@@ -584,7 +593,7 @@ calcUp();
 document.getElementById('collTag').textContent=t.co_tag;
 document.getElementById('collTitle').innerHTML=t.co_t;
 document.getElementById('collDesc').textContent=t.co_d;
-document.getElementById('collGrid').innerHTML=t.co.map(c=>`<div class="card coll-card rv"><div class="card-icon" style="margin:0 auto 1.2rem;width:64px;height:64px;border-radius:18px;font-size:2rem">${c.i}</div><h3>${c.t}</h3><p>${c.d}</p><div class="badge">${c.b}</div></div>`).join('');
+document.getElementById('collGrid').innerHTML=D.coll.map(c=>`<div class="card coll-card rv"><div class="card-icon" style="margin:0 auto 1.2rem;width:64px;height:64px;border-radius:18px;font-size:2rem">${c.i}</div><h3>${lang==='uz'?c.t_uz:c.t_ru}</h3><p>${lang==='uz'?c.d_uz:c.d_ru}</p><div class="badge">${lang==='uz'?c.b_uz:c.b_ru}</div></div>`).join('');
 // About
 document.getElementById('abtTag').textContent=t.ab_tag;
 document.getElementById('abtTitle').innerHTML=t.ab_t;
@@ -620,8 +629,8 @@ document.getElementById('fmNL').textContent=t.fm_n;
 document.getElementById('fmPL').textContent=t.fm_p;
 document.getElementById('fmAL').textContent=t.fm_a;
 document.getElementById('fmCL').textContent=t.fm_c;
-const sel=document.getElementById('fC').options;
-sel[0].textContent=t.fm_sel;sel[1].textContent=t.fm_auto;sel[2].textContent=t.fm_real;sel[3].textContent=t.fm_gold;
+const collSel=document.getElementById('fC');
+collSel.innerHTML=`<option value="">${t.fm_sel}</option>`+D.coll.map(c=>`<option value="${c.id}">${lang==='uz'?c.t_uz:c.t_ru}</option>`).join('');
 document.getElementById('fmRL').textContent=t.fm_r;
 const regSel=document.getElementById('fR');
 regSel.innerHTML=`<option value="">${t.fm_sel}</option>`+D.br.map(b=>`<option value="${b.r}">${lang==='uz'?b.n_uz:b.n_ru}</option>`).join('');
@@ -670,12 +679,54 @@ function calcUp(){
 const ro=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('v')})},{threshold:.12});
 
 // ========== INIT ==========
-window.addEventListener('load',()=>{
+window.addEventListener('load',async()=>{
+  await loadFromCloud();
   setTimeout(()=>document.getElementById('loader').classList.add('hide'),1800);
   render();
   if(location.search.includes('admin'))document.getElementById('admTrig').classList.add('vis');
 });
 window.addEventListener('scroll',()=>{document.getElementById('nav').classList.toggle('solid',scrollY>40)});
+
+// ========== CLOUD SYNC (Google Apps Script) ==========
+// При загрузке сайта подтягиваем актуальные настройки с сервера (если webhook настроен),
+// чтобы данные были одинаковыми на всех устройствах и не сбрасывались при обновлении файла.
+async function loadFromCloud(){
+  if(!D.lead||!D.lead.webhook)return; // webhook ещё не настроен — работаем из localStorage
+  try{
+    const url=D.lead.webhook+(D.lead.webhook.includes('?')?'&':'?')+'action=get_settings';
+    const r=await fetch(url);
+    if(!r.ok)return;
+    const cloud=await r.json();
+    if(!cloud||!cloud.ok||!cloud.data)return;
+    const cd=cloud.data;
+    if(cd.con)Object.assign(D.con,cd.con);
+    if(cd.calc)Object.assign(D.calc,cd.calc);
+    if(cd.br&&cd.br.length)D.br=cd.br;
+    if(cd.abt)Object.assign(D.abt,cd.abt);
+    if(cd.coll&&cd.coll.length)D.coll=cd.coll;
+    // Сохраняем как локальный кэш на случай если облако будет недоступно при следующей загрузке
+    SS('con',D.con);SS('calc',D.calc);SS('br',D.br);SS('abt',D.abt);SS('coll',D.coll);
+  }catch(e){
+    // Облако недоступно — тихо продолжаем работать с локальными/дефолтными данными
+  }
+}
+
+// Отправка всех настроек админки в облако (вызывается после каждого сохранения)
+async function syncToCloud(){
+  if(!D.lead||!D.lead.webhook)return;
+  try{
+    await fetch(D.lead.webhook,{
+      method:'POST',
+      headers:{'Content-Type':'text/plain;charset=utf-8'},
+      body:JSON.stringify({
+        action:'save_settings',
+        data:{con:D.con,calc:D.calc,br:D.br,abt:D.abt,coll:D.coll}
+      })
+    });
+  }catch(e){
+    // Не страшно если не получилось — данные всё равно сохранены локально
+  }
+}
 
 // ========== LANG ==========
 function setL(l){lang=l;document.getElementById('bRu').classList.toggle('on',l==='ru');document.getElementById('bUz').classList.toggle('on',l==='uz');render()}
@@ -697,6 +748,8 @@ async function submit(){
   btn.textContent=T[lang].fm_sending;
 
   const regionName=lang==='uz'?(RN[r]||r):(RN[r]||r);
+  const collItem=D.coll.find(x=>x.id===c);
+  const collateralName=collItem?(lang==='uz'?collItem.t_uz:collItem.t_ru):(c||'');
   const payload={
     source:'website',           // 'website' | 'instagram' | другие каналы в будущем
     channel_label:'Сайт ALOQA',
@@ -704,6 +757,7 @@ async function submit(){
     phone:p,
     amount:a||'',
     collateral:c||'',
+    collateral_name:collateralName,
     region:r||'',
     region_name:regionName,
     lang:lang,
@@ -750,13 +804,39 @@ function loadAdm(){
   document.getElementById('a-clients').value=D.abt.clients;document.getElementById('a-loans').value=D.abt.loans;document.getElementById('a-bcount').value=D.abt.bcount;document.getElementById('a-mission').value=D.abt.mission;document.getElementById('a-values').value=D.abt.vals;document.getElementById('a-goal').value=D.abt.goal;
   document.getElementById('a-webhook').value=(D.lead&&D.lead.webhook)||'';
   renderBrAdm();
+  renderCollAdm();
 }
 function renderBrAdm(){const c=document.getElementById('brAdm');c.innerHTML='';D.br.forEach((b,i)=>{c.innerHTML+=`<div class="ba-item"><input value="${b.n_ru}" onchange="D.br[${i}].n_ru=this.value" placeholder="RU" style="width:80px"><input value="${b.n_uz}" onchange="D.br[${i}].n_uz=this.value" placeholder="UZ" style="width:80px"><select onchange="D.br[${i}].r=this.value">${REGS.map(r=>`<option value="${r}"${r===b.r?' selected':''}>${RN[r]}</option>`).join('')}</select><button class="ap-sm ap-danger" onclick="D.br.splice(${i},1);renderBrAdm()">✕</button></div><div class="ba-item" style="margin-top:-2px"><input value="${b.a_ru}" onchange="D.br[${i}].a_ru=this.value" placeholder="Адрес RU" style="flex:1"><input value="${b.a_uz}" onchange="D.br[${i}].a_uz=this.value" placeholder="Адрес UZ" style="flex:1"></div>`})}
 function addBr(){D.br.push({n_ru:'Новый',n_uz:'Yangi',a_ru:'Адрес',a_uz:'Manzil',r:'buxoro'});renderBrAdm()}
-function saveCon(){D.con={phone:document.getElementById('a-phone').value,tg:document.getElementById('a-tg').value,email:document.getElementById('a-email').value,addr_ru:document.getElementById('a-addr-ru').value,addr_uz:document.getElementById('a-addr-uz').value};SS('con',D.con);render();showT('✅ Сохранено')}
-function saveCalc(){D.calc={annualRate:+document.getElementById('a-rate').value||36,min:+document.getElementById('a-min').value||5e6,max:+document.getElementById('a-max').value||3e8,step:+document.getElementById('a-step').value||5e6,tmin:+document.getElementById('a-tmin').value||3,tmax:+document.getElementById('a-tmax').value||60};SS('calc',D.calc);render();showT('✅ Сохранено')}
-function saveBr(){SS('br',D.br);render();showT('✅ Сохранено')}
-function saveAbt(){D.abt={clients:document.getElementById('a-clients').value,loans:document.getElementById('a-loans').value,bcount:document.getElementById('a-bcount').value,mission:document.getElementById('a-mission').value,vals:document.getElementById('a-values').value,goal:document.getElementById('a-goal').value};SS('abt',D.abt);render();showT('✅ Сохранено')}
+function renderCollAdm(){
+  const c=document.getElementById('collAdm');c.innerHTML='';
+  D.coll.forEach((x,i)=>{
+    c.innerHTML+=`<div class="ba-item">
+      <input value="${x.i}" onchange="D.coll[${i}].i=this.value" placeholder="Эмодзи" style="width:50px;text-align:center">
+      <input value="${x.t_ru}" onchange="D.coll[${i}].t_ru=this.value" placeholder="Название RU" style="flex:1">
+      <input value="${x.t_uz}" onchange="D.coll[${i}].t_uz=this.value" placeholder="Название UZ" style="flex:1">
+      <button class="ap-sm ap-danger" onclick="D.coll.splice(${i},1);renderCollAdm()">✕</button>
+    </div>
+    <div class="ba-item" style="margin-top:-2px">
+      <input value="${x.d_ru}" onchange="D.coll[${i}].d_ru=this.value" placeholder="Описание RU" style="flex:1">
+      <input value="${x.d_uz}" onchange="D.coll[${i}].d_uz=this.value" placeholder="Описание UZ" style="flex:1">
+    </div>
+    <div class="ba-item" style="margin-top:-2px;margin-bottom:.6rem">
+      <input value="${x.b_ru}" onchange="D.coll[${i}].b_ru=this.value" placeholder="Бейдж RU (напр. Быстрая оценка)" style="flex:1">
+      <input value="${x.b_uz}" onchange="D.coll[${i}].b_uz=this.value" placeholder="Бейдж UZ" style="flex:1">
+    </div>`;
+  });
+}
+function addColl(){
+  const newId='coll_'+Date.now();
+  D.coll.push({id:newId,i:'💼',t_ru:'Новый вид залога',t_uz:'Yangi garov turi',d_ru:'Описание',d_uz:'Tavsif',b_ru:'Условия',b_uz:'Shartlar'});
+  renderCollAdm();
+}
+function saveColl(){SS('coll',D.coll);render();showT('✅ Сохранено');syncToCloud();}
+function saveCon(){D.con={phone:document.getElementById('a-phone').value,tg:document.getElementById('a-tg').value,email:document.getElementById('a-email').value,addr_ru:document.getElementById('a-addr-ru').value,addr_uz:document.getElementById('a-addr-uz').value};SS('con',D.con);render();showT('✅ Сохранено');syncToCloud()}
+function saveCalc(){D.calc={annualRate:+document.getElementById('a-rate').value||36,min:+document.getElementById('a-min').value||5e6,max:+document.getElementById('a-max').value||3e8,step:+document.getElementById('a-step').value||5e6,tmin:+document.getElementById('a-tmin').value||3,tmax:+document.getElementById('a-tmax').value||60};SS('calc',D.calc);render();showT('✅ Сохранено');syncToCloud()}
+function saveBr(){SS('br',D.br);render();showT('✅ Сохранено');syncToCloud()}
+function saveAbt(){D.abt={clients:document.getElementById('a-clients').value,loans:document.getElementById('a-loans').value,bcount:document.getElementById('a-bcount').value,mission:document.getElementById('a-mission').value,vals:document.getElementById('a-values').value,goal:document.getElementById('a-goal').value};SS('abt',D.abt);render();showT('✅ Сохранено');syncToCloud()}
 function saveBot(){D.lead={webhook:document.getElementById('a-webhook').value.trim()};SS('lead',D.lead);showT('✅ Webhook сохранён')}
 async function testBot(){if(!D.lead||!D.lead.webhook){showT('❌ Укажите Webhook URL');return}try{const r=await fetch(D.lead.webhook,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({source:'ALOQA test',name:'Тест',phone:'+998 00 000 00 00',amount:'0',collateral:'test',created_at:new Date().toISOString()})});showT(r.ok?'✅ Webhook работает!':'❌ Webhook вернул ошибку')}catch(e){showT('❌ Ошибка подключения к webhook')}}
 function chPass(){const o=document.getElementById('a-oldp').value,n=document.getElementById('a-newp').value,n2=document.getElementById('a-newp2').value;if(o!==D.pass){showT('❌ Неверный пароль');return}if(!n||n.length<4){showT('❌ Мин. 4 символа');return}if(n!==n2){showT('❌ Не совпадают');return}D.pass=n;SS('pass',n);showT('✅ Пароль изменён');document.getElementById('a-oldp').value='';document.getElementById('a-newp').value='';document.getElementById('a-newp2').value=''}
